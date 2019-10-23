@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+war {
+    archiveFileName =  'app.war'
+}
+
+group 'jazapp'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'javax:javaee-api:8.0'
+    implementation 'org.slf4j:slf4j-api:1.7.28'
+    implementation 'org.postgresql:postgresql:42.2.8'
+    implementation 'org.hibernate:hibernate-core:5.4.6.Final'
+    implementation 'org.hibernate:hibernate-hikaricp:5.4.6.Final'
+    implementation 'com.zaxxer:HikariCP:3.4.1'
+    implementation 'org.liquibase:liquibase-core:3.8.0'
+    implementation 'org.liquibase:liquibase-cdi:3.8.0'
+
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}

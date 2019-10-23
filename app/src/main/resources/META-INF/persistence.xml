@@ -1,0 +1,24 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="default" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>
+            <property name="hibernate.jdbc.lob.non_contextual_creation" value="true"/>
+
+            <property name="hibernate.show_sql" value="true" />
+            <!--            <property name="hibernate.format_sql" value="true" />-->
+
+            <property name="hibernate.connection.provider_class"
+                      value="org.hibernate.hikaricp.internal.HikariCPConnectionProvider"/>
+            <property name="hibernate.hikari.driverClassName" value="org.postgresql.Driver"/>
+            <property name="hibernate.hikari.jdbcUrl" value="jdbc:postgresql://localhost:5432/jazapp"/>
+            <property name="hibernate.hikari.username" value="jazapp"/>
+            <property name="hibernate.hikari.password" value="jazapp!98"/>
+
+        </properties>
+    </persistence-unit>
+</persistence>

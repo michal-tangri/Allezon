@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Allezon</title>
+    <h:outputStylesheet name="main.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.css" library="css"/>
+</h:head>
+
+<h:body style="background-color: lightgrey">
+
+    <div class="container" style="margin: auto">
+        <div class="row" style="float: none; margin-top: 320px;">
+            <div class="col-lg-6" style="float: none; margin: auto">
+                <div style="text-align: center">
+                    <h:graphicImage name="allezon-logo.png" library="img" width="400" height="109"/>
+                </div>
+                <div style="color: black; text-align: center"><h4><b>Log in</b></h4></div>
+                <div style="float: none; margin: auto">
+                    <h:form>
+
+                        <h:inputText value="#{loginRequest.username}" id="usernameField" a:placeholder="Username"
+                        styleClass="form-control item-centered" style="width: 270px; height: 50px; background-color: white; color: black" />
+
+                        <h:inputSecret value="#{loginRequest.password}" id="passwordField" a:placeholder="Password"
+                        styleClass="form-control item-centered" style="width: 270px; height: 50px; background-color: white; color: black" />
+
+                       <h:commandButton value="Let me in" action="#{loginController.login}"
+                                                                  styleClass="btn btn-info" style="margin-top: 10px; width: 270px; height: 40px; float: none; margin-left: 135px" />
+
+                    </h:form>
+
+                    <a href="register.xhtml" class="btn btn-info" style="margin-top: 20px; width: 270px; height: 40px; float: none; margin-left: 135px">
+                        Create new account
+                    </a>
+                </div>
+                <div style="text-align: center; color: black; margin-top: 30px;">Allezon &copy; 2019</div>
+            </div>
+        </div>
+    </div>
+
+
+</h:body>
+
+</html>
+

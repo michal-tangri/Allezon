@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+    <title>Allezon</title>
+    <h:outputStylesheet name="main.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.css" library="css"/>
+</h:head>
+
+<h:body style="background-color: lightgray;">
+    <div style="text-align: center">
+        <h:graphicImage name="allezon-logo.png" library="img" width="600" height="164"/>
+    </div>
+    <div class="container" style="color: black">
+        <div class="row" style="float: none; margin-top: 100px;">
+            <div class="col-lg-6" style="float: none; margin: auto">
+                <div style="text-align: center;">
+                    <h2>
+                        Welcome <h:outputText value="#{currentSession.name}"/>&nbsp;<h:outputText value="#{currentSession.surname}"/>!
+                    </h2>
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{currentSession.closeSession}"
+                                         styleClass="btn btn-info" style="margin-top: 10px; width: 270px; height: 40px; float: none;" />
+                    </h:form>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">Allezon &copy; 2019</div>
+            </div>
+        </div>
+    </div>
+
+</h:body>
+
+</html>
