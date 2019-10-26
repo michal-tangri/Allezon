@@ -11,22 +11,6 @@ public class ProfileRepository {
     private EntityManager entityManager;
 
     @Transactional
-    public void sampleCodeWithPC() {
-        var profile = new ProfileEntity();
-
-        entityManager.persist(profile);
-
-        //wersja z kluczem
-        final ProfileEntity profileEntity = entityManager.find(ProfileEntity.class, 7L);
-
-        //wersja bez klucza
-        var list = entityManager.createQuery("from ProfileEntity where name = :name", ProfileEntity.class)
-                .setParameter("name", "pjanowiak2")
-                .getResultList();
-        System.out.println();
-    }
-
-    @Transactional
     public void addUserToDatabase(ProfileEntity user) {
         entityManager.persist(user);
     }
