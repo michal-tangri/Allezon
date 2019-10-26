@@ -1,31 +1,27 @@
 package pl.pjwstk.jaz.allezon.users;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
 
-// this should scoped
+@ApplicationScoped
 public class UsersDatabase {
-    private static List<User> USERS;
+    private List<User> users = new ArrayList<>();
 
-    static {
-        USERS = new ArrayList<>();
-        USERS.add(new User("Michal","Tangri","admin","admin", "admin@admin.com,", "01-01-1970"));
+    public void addUserToDatabase(User user) {
+        users.add(user);
     }
 
-    public static void addUserToDatabase(User user) {
-        USERS.add(user);
-    }
-
-    public static boolean checkIfUserExists(String username) {
-        for(User user: USERS) {
+    public boolean checkIfUserExists(String username) {
+        for(User user: users) {
             if(user.getUsername().equals(username))
                 return true;
         }
         return false;
     }
 
-    public static User getUser(String username) {
-        for(User user: USERS) {
+    public User getUser(String username) {
+        for(User user: users) {
             if(user.getUsername().equals(username))
                 return user;
         }

@@ -1,6 +1,5 @@
 package pl.pjwstk.jaz.allezon.login;
 
-
 import pl.pjwstk.jaz.allezon.CurrentSession;
 
 import javax.inject.Inject;
@@ -12,21 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter("*")
+@WebFilter("/index.xhtml")
 public class LoginFilter extends HttpFilter {
-
     @Inject
     CurrentSession currentSession;
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+        String currentPath = req.getContextPath() + req.getServletPath();
 
-        if (!userIsLogged())
-            //TODO what if I change port/app name?
-            res.sendRedirect("/app/login.xhtml");
-        else
+        if (!userIsLogged()) {
+            if (!currentPath.equals("/app/register.xhtml") && !currentPath.equals("/app/login.xhtml"))
+                res.sendRedirect(req.getContextPath() + "/login.xhtml");
+        } else
             chain.doFilter(req, res);
-
     }
 
     private boolean userIsLogged() {

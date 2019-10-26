@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
     <title>Allezon</title>
@@ -15,103 +16,153 @@
     <div class="container" style="margin: auto">
         <div class="row" style="float: none; margin-top: 320px;">
             <div class="col-lg-6" style="float: none; margin: auto">
-                <div style="text-align: center">
-                    <h:graphicImage name="allezon-logo.png" library="img" width="400" height="109"/>
+
+                <!-- Logo Allezon (Szablon JSF) -->
+                <div>
+                    <ui:insert name="logo" >
+                        <ui:include src="/templates/logo.xhtml" />
+                    </ui:insert>
                 </div>
+
                 <div style="color: black; text-align: center"><h4><b>Register</b></h4></div>
                 <div style="float: none; margin: auto">
+
+                    <!-- Formularz rejestracji -->
                     <h:form>
 
                         <!--NAME-->
-                        <h:inputText value="#{registerRequest.name}" id="nameField" a:placeholder="Name"
+                        <h:inputText value="#{registerRequest.name}"
+                                     id="nameField"
+                                     a:placeholder="Name"
                                      validatorMessage="No special characters, 3-50 letters"
-                                     styleClass="form-control item-centered" style="width: 270px; height: 50px; background-color: white; color: black">
+                                     styleClass="form-control item-centered"
+                                     style="width: 270px; height: 50px; background-color: white; color: black">
 
                             <f:validateLength minimum = "3" maximum="50"/>
 
                             <!-- https://stackoverflow.com/questions/28156769/foreign-language-characters-in-regular-expression-in-c-sharp -->
                             <f:validateRegex pattern="^[\p{L}\s]+$"/>
+
                         </h:inputText>
 
                         <h:message for="nameField"/>
 
                         <!--SURNAME-->
-                        <h:inputText value="#{registerRequest.surname}" id="surnameField" a:placeholder="Surname"
+                        <h:inputText value="#{registerRequest.surname}"
+                                     id="surnameField"
+                                     a:placeholder="Surname"
                                      validatorMessage="No special characters, 3-50 letters"
-                                     styleClass="form-control item-centered" style="width: 270px; height: 50px; background-color: white; color: black">
+                                     styleClass="form-control item-centered"
+                                     style="width: 270px; height: 50px; background-color: white; color: black">
 
                             <f:validateLength minimum = "3" maximum="50"/>
                             <f:validateRegex pattern="^[\p{L}]+$"/>
 
                         </h:inputText>
+
                         <h:message for="surnameField"/>
 
                         <!--USERNAME-->
-                        <h:inputText value="#{registerRequest.username}" id="usernameField" a:placeholder="Username"
+                        <h:inputText value="#{registerRequest.username}"
+                                     id="usernameField"
+                                     a:placeholder="Username"
                                      validatorMessage="Small characters and digits"
-                                     styleClass="form-control item-centered" style="width: 270px; height: 50px; background-color: white; color: black">
+                                     styleClass="form-control item-centered"
+                                     style="width: 270px; height: 50px; background-color: white; color: black">
 
                             <f:validateRegex pattern="^[a-z0-9]+$"/>
 
                         </h:inputText>
+
                         <h:message for="usernameField"/>
 
                         <!--PASSWORD-->
-                        <h:inputSecret value="#{registerRequest.password}" id="passwordField" a:placeholder="Password"
+                        <h:inputSecret value="#{registerRequest.password}"
+                                       id="passwordField"
+                                       a:placeholder="Password"
                                        validatorMessage="One large character, one small character, one digit, 3-50 letters"
-                                       styleClass="form-control item-centered" style="width: 270px; height: 50px; background-color: white; color: black" >
+                                       styleClass="form-control item-centered"
+                                       style="width: 270px; height: 50px; background-color: white; color: black" >
 
                             <f:validateLength minimum = "5" maximum="30"/>
+
                             <!-- https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a -->
                             <f:validateRegex pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*#?]+$"/>
+
+                            <!-- Wiadomość wyświetlana kiedy podane hasła się nie zgadzają -->
                             <h:outputText value="Passwords do not match!" rendered="#{registerController.passwordsDoNotMatch}"/>
+
                         </h:inputSecret>
+
                         <h:message for="passwordField"/>
 
                         <!--REPEAT PASSWORD-->
-                        <h:inputSecret value="#{registerRequest.passwordRepeat}" id="passwordFieldRepeat" a:placeholder="Repeat password"
+                        <h:inputSecret value="#{registerRequest.passwordRepeat}"
+                                       id="passwordFieldRepeat"
+                                       a:placeholder="Repeat password"
                                        validatorMessage="One large character, one small character, one digit, 3-50 letters"
-                                       styleClass="form-control item-centered" style="width: 270px; height: 50px; background-color: white; color: black" >
+                                       styleClass="form-control item-centered"
+                                       style="width: 270px; height: 50px; background-color: white; color: black" >
 
                             <f:validateLength minimum = "5" maximum="30"/>
+
                             <!-- https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a -->
                             <f:validateRegex pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*#?]+$"/>
 
                         </h:inputSecret>
+
                         <h:message for="passwordFieldRepeat"/>
 
                         <!--EMAIL-->
-                        <h:inputText value="#{registerRequest.emailAddress}" id="emailField" a:placeholder="E-mail address"
+                        <h:inputText value="#{registerRequest.emailAddress}"
+                                     id="emailField"
+                                     a:placeholder="E-mail address"
                                      validatorMessage="Please enter a valid e-mail address"
-                                     styleClass="form-control item-centered" style="width: 270px; height: 50px; background-color: white; color: black">
+                                     styleClass="form-control item-centered"
+                                     style="width: 270px; height: 50px; background-color: white; color: black">
 
                             <!-- https://www.regular-expressions.info/email.html -->
                             <f:validateRegex pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$"/>
 
                         </h:inputText>
+
                         <h:message for="emailField"/>
 
                         <!--DATE OF BIRTH-->
-                        <h:inputText value="#{registerRequest.dateOfBirth}" id="birthField" a:placeholder="Date of birth (DD-MM-YYYY)"
+                        <h:inputText value="#{registerRequest.dateOfBirth}"
+                                     id="birthField"
+                                     a:placeholder="Date of birth (DD-MM-YYYY)"
                                      validatorMessage="Format DD-M-YYYY"
-                                     styleClass="form-control item-centered" style="width: 270px; height: 50px; background-color: white; color: black">
+                                     styleClass="form-control item-centered"
+                                     style="width: 270px; height: 50px; background-color: white; color: black">
 
                             <f:validateRegex pattern="^([0-2][0-9]|(3)[0-1])(-)(((0)[0-9])|((1)[0-2]))(-)\d{4}+$"/>
 
                         </h:inputText>
+
                         <h:message for="birthField"/>
 
                         <!--BUTTON-->
-                        <h:commandButton value="Register" action="#{registerController.register}"
-                                         styleClass="btn btn-info" style="margin-top: 10px; width: 270px; height: 40px; float: none; margin-left: 135px"/>
+                        <h:commandButton value="Register"
+                                         action="#{registerController.register}"
+                                         styleClass="btn btn-info"
+                                         style="margin-top: 10px; width: 270px; height: 40px; float: none; margin-left: 135px"/>
 
                     </h:form>
 
+                    <!-- Przycisk przekierowujacy na stronę logowania -->
                     <a href="login.xhtml" class="btn btn-info" style="margin-top: 20px; width: 270px; height: 40px; float: none; margin-left: 135px">
                         I already have an account
                     </a>
                 </div>
-                <div style="text-align: center; color: black; margin-top: 30px;">Allezon &copy; 2019</div>
+
+                <!-- Footer z napisem Allezon (Szablon JSF) -->
+                <div>
+                    <ui:insert name="footer" >
+                        <ui:include src="/templates/footer.xhtml" />
+                    </ui:insert>
+                </div>
+
             </div>
         </div>
     </div>

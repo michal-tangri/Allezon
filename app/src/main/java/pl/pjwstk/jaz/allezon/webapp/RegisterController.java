@@ -16,12 +16,14 @@ import java.io.IOException;
 public class RegisterController {
     @Inject
     private RegisterRequest registerRequest;
+    @Inject
+    private UsersDatabase usersDatabase;
 
     private boolean passwordsDoNotMatch = false;
 
     public void register() {
         System.out.println("Tried to register using " + registerRequest.toString());
-        if(!UsersDatabase.checkIfUserExists(registerRequest.getUsername()))
+        if(!usersDatabase.checkIfUserExists(registerRequest.getUsername()))
             addUserToDatabase();
     }
 
@@ -36,14 +38,14 @@ public class RegisterController {
 
         if(password.equals(passwordRepeat)) {
             User registeringUser = new User(name, surname, username, password, emailAddress, dateOfBirth);
-            UsersDatabase.addUserToDatabase(registeringUser);
+            usersDatabase.addUserToDatabase(registeringUser);
 
             //https://stackoverflow.com/questions/16776981/response-object-in-jsf
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             try {
-                externalContext.redirect("http://localhost:8080/app/login.xhtml");
+                externalContext.redirect(externalContext.getApplicationContextPath() + "/login.xhtml");
             } catch (IOException exception0) {
-                System.out.println("Failed to redirect to index.xhtml");
+                System.out.println("Failed to redirect to login.xhtml");
             }
         }
         else
