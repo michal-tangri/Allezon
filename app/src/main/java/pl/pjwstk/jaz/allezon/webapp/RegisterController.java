@@ -1,5 +1,7 @@
 package pl.pjwstk.jaz.allezon.webapp;
 
+import pl.pjwstk.jaz.allezon.auth.ProfileEntity;
+import pl.pjwstk.jaz.allezon.auth.ProfileRepository;
 import pl.pjwstk.jaz.allezon.register.RegisterRequest;
 import pl.pjwstk.jaz.allezon.users.User;
 import pl.pjwstk.jaz.allezon.users.UsersDatabase;
@@ -17,17 +19,27 @@ public class RegisterController {
     @Inject
     private RegisterRequest registerRequest;
     @Inject
-    private UsersDatabase usersDatabase;
+    private UsersDatabase localDatabase;
+    @Inject
+    private ProfileRepository database; s
 
     private boolean passwordsDoNotMatch = false;
+    private boolean usernameIsAlreadyInDatabase = false;
 
     public void register() {
         System.out.println("Tried to register using " + registerRequest.toString());
-        if(!usersDatabase.checkIfUserExists(registerRequest.getUsername()))
+        if (!localDatabase.checkIfUserExists(registerRequest.getUsername())
+                && !database.checkIfUserExists(registerRequest.getUsername())) {
+            addUserToLocalDatabase();
             addUserToDatabase();
+        }
+        else
+            usernameIsAlreadyInDatabase = true;
+
     }
 
-    private void addUserToDatabase() {
+    private void addUserToLocalDatabase() {
+
         String name = registerRequest.getName();
         String surname = registerRequest.getSurname();
         String username = registerRequest.getUsername();
@@ -36,23 +48,41 @@ public class RegisterController {
         String emailAddress = registerRequest.getEmailAddress();
         String dateOfBirth = registerRequest.getDateOfBirth();
 
-        if(password.equals(passwordRepeat)) {
+        if (password.equals(passwordRepeat)) {
             User registeringUser = new User(name, surname, username, password, emailAddress, dateOfBirth);
-            usersDatabase.addUserToDatabase(registeringUser);
+            localDatabase.addUserToDatabase(registeringUser);
+        } else
+            passwordsDoNotMatch = true;
+    }
 
-            //https://stackoverflow.com/questions/16776981/response-object-in-jsf
-            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-            try {
-                externalContext.redirect(externalContext.getApplicationContextPath() + "/login.xhtml");
-            } catch (IOException exception0) {
-                System.out.println("Failed to redirect to login.xhtml");
-            }
-        }
-        else
+    private void addUserToDatabase() {
+
+        String name = registerRequest.getName();
+        String surname = registerRequest.getSurname();
+        String username = registerRequest.getUsername();
+        String password = registerRequest.getPassword();
+        String passwordRepeat = registerRequest.getPasswordRepeat();
+        String emailAddress = registerRequest.getEmailAddress();
+        String dateOfBirth = registerRequest.getDateOfBirth();
+
+
+        if(password.equals(passwordRepeat)) {
+            ProfileEntity user = new ProfileEntity(username, name, surname, password, emailAddress, dateOfBirth);
+            database.addUserToDatabase(user);
+            redirectToLogin();
+        } else
             passwordsDoNotMatch = true;
 
+    }
 
-
+    private void redirectToLogin() {
+        //https://stackoverflow.com/questions/16776981/response-object-in-jsf
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            externalContext.redirect(externalContext.getApplicationContextPath() + "/login.xhtml");
+        } catch (IOException exception0) {
+            System.out.println("Failed to redirect to login.xhtml");
+        }
     }
 
     public boolean isPasswordsDoNotMatch() {
@@ -62,4 +92,9 @@ public class RegisterController {
     public void setPasswordsDoNotMatch(boolean passwordsDoNotMatch) {
         this.passwordsDoNotMatch = passwordsDoNotMatch;
     }
+
+    public boolean isUsernameIsAlreadyInDatabase() {
+        return usernameIsAlreadyInDatabase;
+    }
+
 }

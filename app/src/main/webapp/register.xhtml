@@ -74,6 +74,9 @@
 
                         </h:inputText>
 
+                        <!-- Wiadomość wyświetlana kiedy użytkownik już istnieje w bazie -->
+                        <h:outputText value="Username already taken!" rendered="#{registerController.usernameIsAlreadyInDatabase}"/>
+
                         <h:message for="usernameField"/>
 
                         <!--PASSWORD-->
