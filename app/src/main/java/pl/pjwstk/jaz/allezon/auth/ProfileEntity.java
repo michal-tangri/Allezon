@@ -14,19 +14,19 @@ public class ProfileEntity {
     private String surname;
     private String password;
     private String email;
-    private String phone;
+    private String dateOfBirth;
 
     public ProfileEntity() {
 
     }
 
-    public ProfileEntity(String username, String name, String surname, String password, String email, String phone) {
+    public ProfileEntity(String username, String name, String surname, String password, String email, String dateOfBirth) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.email = email;
-        this.phone = phone;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getName() {
@@ -49,12 +49,12 @@ public class ProfileEntity {
         this.surname = surname;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getEmail() {

@@ -1,8 +1,8 @@
 databaseChangeLog:
   - changeSet:
-      id: 20191026_init
+      id: 20191027_init
       author: Michał Tangri
       sqlFile:
         relativeToChangelogFile: true
         splitStatements: false
-        path: 20191026_init.sql
+        path: 20191027_init.sql
