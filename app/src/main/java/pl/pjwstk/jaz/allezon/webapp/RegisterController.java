@@ -21,7 +21,7 @@ public class RegisterController {
     @Inject
     private UsersDatabase localDatabase;
     @Inject
-    private ProfileRepository database; s
+    private ProfileRepository database;
 
     private boolean passwordsDoNotMatch = false;
     private boolean usernameIsAlreadyInDatabase = false;
