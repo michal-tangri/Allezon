@@ -1,5 +1,6 @@
 package pl.pjwstk.jaz.allezon.webapp;
 
+import org.mindrot.jbcrypt.BCrypt;
 import pl.pjwstk.jaz.allezon.CurrentSession;
 import pl.pjwstk.jaz.allezon.auth.ProfileEntity;
 import pl.pjwstk.jaz.allezon.auth.ProfileRepository;
@@ -48,7 +49,7 @@ public class LoginController {
     private void loginFromDatabase() {
         ProfileEntity loggingUser = database.getUser(loginRequest.getUsername());
         if(loggingUser != null) {
-            if (loggingUser.getPassword().equals(loginRequest.getPassword())) {
+            if (BCrypt.checkpw(loginRequest.getPassword(), loggingUser.getPassword())) {
                 currentSession.setName(loggingUser.getName());
                 currentSession.setSurname(loggingUser.getSurname());
                 currentSession.setLogged(true);
@@ -62,7 +63,7 @@ public class LoginController {
 
     private void loginFromLocalDatabase() {
             User loggingUser = localDatabase.getUser(loginRequest.getUsername());
-            if (loggingUser.getPassword().equals(loginRequest.getPassword())) {
+            if (BCrypt.checkpw(loginRequest.getPassword(), loggingUser.getPassword())) {
                 currentSession.setName(loggingUser.getName());
                 currentSession.setSurname(loggingUser.getSurname());
                 currentSession.setLogged(true);

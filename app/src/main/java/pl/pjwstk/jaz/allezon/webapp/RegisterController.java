@@ -1,5 +1,6 @@
 package pl.pjwstk.jaz.allezon.webapp;
 
+import org.mindrot.jbcrypt.BCrypt;
 import pl.pjwstk.jaz.allezon.auth.ProfileEntity;
 import pl.pjwstk.jaz.allezon.auth.ProfileRepository;
 import pl.pjwstk.jaz.allezon.register.RegisterRequest;
@@ -49,7 +50,8 @@ public class RegisterController {
         String dateOfBirth = registerRequest.getDateOfBirth();
 
         if (password.equals(passwordRepeat)) {
-            User registeringUser = new User(name, surname, username, password, emailAddress, dateOfBirth);
+            String hashedPass = BCrypt.hashpw(password, BCrypt.gensalt());
+            User registeringUser = new User(name, surname, username, hashedPass, emailAddress, dateOfBirth);
             localDatabase.addUserToDatabase(registeringUser);
         } else
             passwordsDoNotMatch = true;
@@ -67,7 +69,8 @@ public class RegisterController {
 
 
         if(password.equals(passwordRepeat)) {
-            ProfileEntity user = new ProfileEntity(username, name, surname, password, emailAddress, dateOfBirth);
+            String hashedPass = BCrypt.hashpw(password, BCrypt.gensalt());
+            ProfileEntity user = new ProfileEntity(username, name, surname, hashedPass, emailAddress, dateOfBirth);
             database.addUserToDatabase(user);
             redirectToLogin();
         } else
