@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter("/index.xhtml")
+@WebFilter("*")
 public class LoginFilter extends HttpFilter {
     @Inject
     CurrentSession currentSession;
@@ -20,11 +20,15 @@ public class LoginFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         String currentPath = req.getContextPath() + req.getServletPath();
 
-        if (!userIsLogged()) {
-            if (!currentPath.equals("/app/register.xhtml") && !currentPath.equals("/app/login.xhtml"))
-                res.sendRedirect(req.getContextPath() + "/login.xhtml");
-        } else
+        //https://stackoverflow.com/questions/44702494/servlet-filter-prevents-css-from-working
+        boolean isCSS = req.getRequestURI().contains(".css");
+        boolean isImage = req.getRequestURI().contains(".png");
+
+        if (userIsLogged() || currentPath.equals("/app/register.xhtml") || currentPath.equals("/app/login.xhtml")  || isCSS || isImage) {
             chain.doFilter(req, res);
+        } else {
+            res.sendRedirect(req.getContextPath() + "/login.xhtml");
+        }
     }
 
     private boolean userIsLogged() {
