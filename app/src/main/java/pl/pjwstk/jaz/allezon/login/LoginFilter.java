@@ -2,6 +2,8 @@ package pl.pjwstk.jaz.allezon.login;
 
 import pl.pjwstk.jaz.allezon.CurrentSession;
 
+import javax.faces.application.Resource;
+import javax.faces.application.ResourceHandler;
 import javax.inject.Inject;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,10 +23,9 @@ public class LoginFilter extends HttpFilter {
         String currentPath = req.getContextPath() + req.getServletPath();
 
         //https://stackoverflow.com/questions/44702494/servlet-filter-prevents-css-from-working
-        boolean isCSS = req.getRequestURI().contains(".css");
-        boolean isImage = req.getRequestURI().contains(".png");
+        boolean isResource = req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/");
 
-        if (userIsLogged() || currentPath.equals("/app/register.xhtml") || currentPath.equals("/app/login.xhtml")  || isCSS || isImage) {
+        if (userIsLogged() || currentPath.equals("/app/register.xhtml") || currentPath.equals("/app/login.xhtml")  || isResource ) {
             chain.doFilter(req, res);
         } else {
             res.sendRedirect(req.getContextPath() + "/login.xhtml");
