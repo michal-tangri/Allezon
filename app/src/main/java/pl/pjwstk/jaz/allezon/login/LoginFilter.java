@@ -25,6 +25,7 @@ public class LoginFilter extends HttpFilter {
         //https://stackoverflow.com/questions/44702494/servlet-filter-prevents-css-from-working
         boolean isResource = req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/");
 
+        // FIXME path may not always start with /app, our code should be independent of context path
         if (userIsLogged() || currentPath.equals("/app/register.xhtml") || currentPath.equals("/app/login.xhtml")  || isResource ) {
             chain.doFilter(req, res);
         } else {

@@ -13,6 +13,7 @@ public class UsersDatabase {
     }
 
     public boolean checkIfUserExists(String username) {
+        // FIXME You can use Java Stream API
         for(User user: users) {
             if(user.getUsername().equals(username))
                 return true;
@@ -21,6 +22,7 @@ public class UsersDatabase {
     }
 
     public User getUser(String username) {
+        // FIXME You can use Java Stream API
         for(User user: users) {
             if(user.getUsername().equals(username))
                 return user;
