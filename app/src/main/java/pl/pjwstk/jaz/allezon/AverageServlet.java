@@ -14,5 +14,6 @@ public class AverageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setStatus(200);
         var writer = resp.getWriter();
+
     }
 }

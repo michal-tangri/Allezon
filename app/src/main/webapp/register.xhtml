@@ -31,6 +31,7 @@
                     <h:form>
 
                         <!--NAME-->
+<!--                        FIXME move validator message to Message.properties -->
                         <h:inputText value="#{registerRequest.name}"
                                      id="nameField"
                                      a:placeholder="Name"
@@ -42,6 +43,7 @@
 
                             <!-- https://stackoverflow.com/questions/28156769/foreign-language-characters-in-regular-expression-in-c-sharp -->
                             <f:validateRegex pattern="^[\p{L}\s]+$"/>
+                            <!-- FIXME try to write legth validator also in regex -->
 
                         </h:inputText>
 
