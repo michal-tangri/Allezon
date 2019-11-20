@@ -15,6 +15,7 @@ public class ProfileEntity {
     private String password;
     private String email;
     private String dateOfBirth;
+    private Boolean admin;
 
     public ProfileEntity() {
 
@@ -72,4 +73,13 @@ public class ProfileEntity {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+
 }

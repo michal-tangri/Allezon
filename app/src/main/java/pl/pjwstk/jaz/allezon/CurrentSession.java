@@ -15,6 +15,15 @@ public class CurrentSession implements Serializable {
     private String surname;
     private String username;
     private boolean isLogged;
+    private boolean isAdmin;
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 
     public String getName() {
         return name;

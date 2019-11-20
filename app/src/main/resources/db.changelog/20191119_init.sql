@@ -7,6 +7,7 @@ CREATE TABLE profile (
     password            VARCHAR         NOT NULL,
     email               VARCHAR(30)     NOT NULL,
     dateOfBirth         VARCHAR(14)     NOT NULL,
+    admin               BOOLEAN,
 
     PRIMARY KEY (username)
 );
