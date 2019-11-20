@@ -5,8 +5,8 @@ import pl.pjwstk.jaz.allezon.CurrentSession;
 import pl.pjwstk.jaz.allezon.auth.ProfileEntity;
 import pl.pjwstk.jaz.allezon.auth.ProfileRepository;
 import pl.pjwstk.jaz.allezon.login.LoginRequest;
-import pl.pjwstk.jaz.allezon.users.User;
-import pl.pjwstk.jaz.allezon.users.UsersDatabase;
+//import pl.pjwstk.jaz.allezon.users.User;
+//import pl.pjwstk.jaz.allezon.users.UsersDatabase;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
@@ -22,8 +22,8 @@ public class LoginController {
     private LoginRequest loginRequest;
     @Inject
     private CurrentSession currentSession;
-    @Inject
-    private UsersDatabase localDatabase;
+//    @Inject
+//    private UsersDatabase localDatabase;
     @Inject
     private ProfileRepository database;
 
@@ -37,9 +37,9 @@ public class LoginController {
         if (database.checkIfUserExists(username)) {
             loginFromDatabase();
         }
-        else if (localDatabase.checkIfUserExists(username)) {
-            loginFromLocalDatabase();
-        }
+//        else if (localDatabase.checkIfUserExists(username)) {
+//            loginFromLocalDatabase();
+//        }
         else
             loginUnsuccessful = true;
 
@@ -60,7 +60,7 @@ public class LoginController {
 
         }
     }
-
+/*
     private void loginFromLocalDatabase() {
             User loggingUser = localDatabase.getUser(loginRequest.getUsername());
             if (BCrypt.checkpw(loginRequest.getPassword(), loggingUser.getPassword())) {
@@ -71,7 +71,7 @@ public class LoginController {
             }
             else
                 loginUnsuccessful = true;
-    }
+    }*/
 
     private void redirectToIndex() {
         //https://stackoverflow.com/questions/16776981/response-object-in-jsf

@@ -4,8 +4,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import pl.pjwstk.jaz.allezon.auth.ProfileEntity;
 import pl.pjwstk.jaz.allezon.auth.ProfileRepository;
 import pl.pjwstk.jaz.allezon.register.RegisterRequest;
-import pl.pjwstk.jaz.allezon.users.User;
-import pl.pjwstk.jaz.allezon.users.UsersDatabase;
+//import pl.pjwstk.jaz.allezon.users.User;
+//import pl.pjwstk.jaz.allezon.users.UsersDatabase;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
@@ -19,8 +19,8 @@ import java.io.IOException;
 public class RegisterController {
     @Inject
     private RegisterRequest registerRequest;
-    @Inject
-    private UsersDatabase localDatabase;
+//    @Inject
+//    private UsersDatabase localDatabase;
     @Inject
     private ProfileRepository database;
 
@@ -29,9 +29,10 @@ public class RegisterController {
 
     public void register() {
         System.out.println("Tried to register using " + registerRequest.toString());
-        if (!localDatabase.checkIfUserExists(registerRequest.getUsername())
-                && !database.checkIfUserExists(registerRequest.getUsername())) {
-            addUserToLocalDatabase();
+
+        //!localDatabase.checkIfUserExists(registerRequest.getUsername() &&
+        if (!database.checkIfUserExists(registerRequest.getUsername())) {
+            //addUserToLocalDatabase();
             addUserToDatabase();
         }
         else
@@ -39,7 +40,7 @@ public class RegisterController {
 
     }
 
-    private void addUserToLocalDatabase() {
+/*    private void addUserToLocalDatabase() {
 
         String name = registerRequest.getName();
         String surname = registerRequest.getSurname();
@@ -55,7 +56,7 @@ public class RegisterController {
             localDatabase.addUserToDatabase(registeringUser);
         } else
             passwordsDoNotMatch = true;
-    }
+    }*/
 
     private void addUserToDatabase() {
 
