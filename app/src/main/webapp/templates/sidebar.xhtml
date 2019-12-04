@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+>
+
+<body>
+
+<ui:composition>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <ul class="nav">
+            <li>
+                <h:link outcome="auctions.xhtml"
+                        styleClass="btn btn-primary"
+                        style="width: 280px; height: 50px; margin-left: 10px; margin-top: 10px; text-align: left;
+                        padding-left: 0">
+                    <div style="font-size: 20px; margin-top: -6px">
+                        <i class="icon-shop" style="font-size: 32px; margin: 0 0 0 5px"/>
+                        <div style="display: inline">All auctions</div>
+                    </div>
+                </h:link>
+            </li>
+            <li>
+                <h:link outcome="user_auctions.xhtml"
+                        styleClass="btn btn-primary"
+                        style="width: 280px; height: 50px; margin-left: 10px; margin-top: 10px; text-align: left;
+                        padding-left: 0">
+                    <div style="font-size: 20px; margin-top: -6px">
+                        <i class="icon-box" style="font-size: 32px; margin: 0 0 0 5px"/>
+                        <div style="display: inline">Your auctions</div>
+                    </div>
+                </h:link>
+            </li>
+            <li>
+                <h:link outcome="add_auction.xhtml"
+                        styleClass="btn btn-primary"
+                        style="width: 280px; height: 50px; margin-left: 10px; margin-top: 10px; text-align: left;
+                        padding-left: 0">
+                    <div style="font-size: 20px; margin-top: -6px">
+                        <i class="icon-plus-squared" style="font-size: 32px; margin: 0 0 0 5px"/>
+                        <div style="display: inline">Add auction</div>
+                    </div>
+                </h:link>
+            </li>
+            <li>
+                <h:link outcome="about.xhtml"
+                        styleClass="btn btn-primary"
+                        style="width: 280px; height: 50px; margin-left: 10px; margin-top: 10px; text-align: left;
+                        padding-left: 0">
+                    <div style="font-size: 20px; margin-top: -6px">
+                        <i class="icon-info-circled" style="font-size: 32px; margin: 0 0 0 5px"/>
+                        <div style="display: inline">About Allezon</div>
+                    </div>
+                </h:link>
+            </li>
+            <li>
+                <h:link outcome="contact.xhtml"
+                        styleClass="btn btn-primary"
+                        style="width: 280px; height: 50px; margin-left: 10px; margin-top: 10px; text-align: left;
+                        padding-left: 0">
+                    <div style="font-size: 20px; margin-top: -6px">
+                        <i class="icon-vcard" style="font-size: 32px; margin: 0 0 0 5px"/>
+                        <div style="display: inline">Contact</div>
+                    </div>
+                </h:link>
+            </li>
+            <li>
+                <h:link outcome="admin_panel.xhtml"
+                        rendered="#{currentSession.admin}"
+                        styleClass="btn btn-primary"
+                        style="width: 280px; height: 50px; margin-left: 10px; margin-top: 10px; text-align: left;
+                        padding-left: 0">
+                    <div style="font-size: 20px; margin-top: -6px">
+                        <i class="icon-briefcase" style="font-size: 32px; margin: 0 0 0 5px"/>
+                        <div style="display: inline">Administrator panel</div>
+                    </div>
+                </h:link>
+            </li>
+        </ul>
+    </div>
+
+</ui:composition>
+
+</body>
+
+</html>

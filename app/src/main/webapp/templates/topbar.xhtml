@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+>
+
+<body>
+
+<ui:composition>
+
+    <!-- Topbar -->
+    <div class="container-fluid" style="width: 100%; padding-left: 0; padding-right: 0;">
+        <div class="row">
+            <div class="col-lg">
+                <div id="topBar">
+                    <header>
+                        <h:link outcome="index.html">
+                            <h:graphicImage url="#{resource['img/allezon-logo-white.png']}"
+                                            style="width: 250px; height: 68px"/>
+                        </h:link>
+
+                        <div align="right" style="margin-top: -50px">
+                            <h:form>
+                                <h:commandButton value="Logout"
+                                                 action="#{currentSession.closeSession}"
+                                                 styleClass="btn btn-primary"
+                                                 rendered="#{currentSession.logged}"
+                                                 style="width: 120px; height: 36px;
+                                                        margin-left: 10px; margin-bottom: 10px;
+                                                        margin-right: 20px; margin-top: -14px;
+                                                        text-align: center;"/>
+                            </h:form>
+
+                            <h:link value="Sign in"
+                                    outcome="login.xhtml"
+                                    styleClass="btn btn-primary"
+                                    rendered="#{currentSession.logged == false}"
+                                    style="width: 120px; height: 36px;
+                                           margin-left: 10px; margin-bottom: 10px;
+                                           margin-right: 20px; margin-top: -14px;
+                                           text-align: center;"/>
+
+                            <h:link value="Sign up"
+                                    outcome="register"
+                                    styleClass="btn btn-primary"
+                                    rendered="#{currentSession.logged == false}"
+                                    style="width: 120px; height: 36px;
+                                           margin-left: 10px; margin-bottom: 10px;
+                                           margin-right: 20px; margin-top: -14px;
+                                           text-align: center;"/>
+                        </div>
+
+                    </header>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>
+
+</body>
+
+</html>
