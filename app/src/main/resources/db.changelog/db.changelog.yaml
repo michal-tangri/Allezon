@@ -7,12 +7,12 @@ databaseChangeLog:
         splitStatements: false
         path: 20191119_init.sql
   - changeSet:
-      id: 20191113_init
+      id: 20191123_init
       author: Michał Tangri
       sqlFile:
         relativeToChangelogFile: true
         splitStatements: false
-        path: 20191113_init.sql
+        path: 20191123_init.sql
   - changeSet:
       id: admin_init
       author: Michał Tangri
@@ -20,3 +20,10 @@ databaseChangeLog:
         relativeToChangelogFile: true
         splitStatements: false
         path: admin_init.sql
+  - changeSet:
+      id: parameters_init
+      author: Michał Tangri
+      sqlFile:
+        relativeToChangelogFile: true
+        splitStatements: false
+        path: parameters_init.sql

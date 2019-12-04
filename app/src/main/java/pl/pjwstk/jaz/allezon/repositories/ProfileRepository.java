@@ -1,4 +1,6 @@
-package pl.pjwstk.jaz.allezon.auth;
+package pl.pjwstk.jaz.allezon.repositories;
+
+import pl.pjwstk.jaz.allezon.entities.ProfileEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;

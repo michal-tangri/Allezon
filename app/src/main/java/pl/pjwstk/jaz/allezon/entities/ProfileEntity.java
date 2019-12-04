@@ -1,4 +1,4 @@
-package pl.pjwstk.jaz.allezon.auth;
+package pl.pjwstk.jaz.allezon.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,13 +21,14 @@ public class ProfileEntity {
 
     }
 
-    public ProfileEntity(String username, String name, String surname, String password, String email, String dateOfBirth) {
+    public ProfileEntity(String username, String name, String surname, String password, String email, String dateOfBirth, Boolean admin) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
+        this.admin = admin;
     }
 
     public String getName() {

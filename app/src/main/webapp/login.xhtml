@@ -3,7 +3,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
@@ -11,78 +11,82 @@
     <title>Allezon</title>
     <h:outputStylesheet name="main.css" library="css"/>
     <h:outputStylesheet name="bootstrap.css" library="css"/>
+    <h:outputStylesheet name="html-background.css" library="css"/>
 
 </h:head>
 
 <h:body style="background-color: lightgrey">
 
-    <div class="container" style="margin: auto">
-        <div class="row" style="float: none; margin-top: 320px;">
-            <div class="col-lg-6" style="float: none; margin: auto">
+    <ui:include src="/templates/topbar.xhtml"/>
 
-                <!-- Logo Allezon (Szablon JSF) -->
-                <div>
-                    <ui:insert name="logo">
-                        <ui:include src="/templates/logo.xhtml"/>
-                    </ui:insert>
+    <div class="auth-background">
+
+        <div class="container-fluid" style="position: absolute; top: 40%; bottom: 60%">
+
+            <!-- Napis nad formularzem -->
+            <div class="row">
+                <div class="col-lg">
+                    <div>
+                        <div style="color: black; text-align: center">
+                            <h4>Sign in</h4>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
-                <!-- Napisz nad formularzem -->
-                <div style="color: black; text-align: center">
-                    <h4><b>Log in</b></h4>
+            <!-- Formularz logowania -->
+            <div class="row">
+                <div class="col-lg">
+                    <div>
+                        <div align="center">
+
+                            <h:form>
+                                <!-- Wiadomość wyświetlana przy nieudanej próbie logowania -->
+                                <h:outputText value="#{msg['jaz.allezon.validator.login.wrongValues']}"
+                                              rendered="#{loginController.loginUnsuccessful}"/>
+
+                                <!-- Nazwa użytkownika -->
+                                <h:inputText value="#{loginRequest.username}"
+                                             id="usernameField"
+                                             a:placeholder="Username"
+                                             styleClass="form-control item-centered"
+                                             style="width: 270px; height: 50px; background-color: white; color: black"/>
+
+                                <!-- Hasło -->
+                                <h:inputSecret value="#{loginRequest.password}"
+                                               id="passwordField"
+                                               a:placeholder="Password"
+                                               styleClass="form-control item-centered"
+                                               style="width: 270px; height: 50px; background-color: white; color: black"/>
+
+                                <!-- Przycisk logowania -->
+                                <h:commandButton value="Let me in"
+                                                 action="#{loginController.login}"
+                                                 styleClass="btn btn-info"
+                                                 style="margin-top: 10px; width: 270px; height: 40px;"/>
+                            </h:form>
+
+                        </div>
+                    </div>
                 </div>
+            </div>
 
-                <!-- Formularz logowania -->
-                <div style="float: none; margin: auto">
-
-                    <h:form>
-                        <!-- Nazwa użytkownika -->
-                        <h:inputText value="#{loginRequest.username}"
-                                     id="usernameField"
-                                     a:placeholder="Username"
-                                     styleClass="form-control item-centered"
-                                     style="width: 270px; height: 50px; background-color: white; color: black"/>
-
-                        <!-- Hasło -->
-                        <h:inputSecret value="#{loginRequest.password}"
-                                       id="passwordField"
-                                       a:placeholder="Password"
-                                       styleClass="form-control item-centered"
-                                       style="width: 270px; height: 50px; background-color: white; color: black"/>
-
-                        <!-- Wiadomość wyświetlana przy nieudanej próbie logowania -->
-                        <h:outputText value="Wrong username or password!"
-                                      rendered="#{loginController.loginUnsuccessful}"/>
-
-                        <!-- Przycisk logowania -->
-                        <h:commandButton value="Let me in"
-                                         action="#{loginController.login}"
-                                         styleClass="btn btn-info"
-                                         style="margin-top: 10px; width: 270px; height: 40px; float: none; margin-left: 135px"/>
-
-                    </h:form>
-
-                    <!-- Przycisk przekierowujący do rejestracji -->
-                    <a href="register.xhtml" class="btn btn-info"
-                       style="margin-top: 20px; width: 270px; height: 40px; float: none; margin-left: 135px">
-                        Create new account
-                    </a>
-
+            <div class="row">
+                <div class="col-lg">
+                    <div>
+                        <div>
+                            <ui:insert name="footer">
+                                <ui:include src="/templates/footer.xhtml"/>
+                            </ui:insert>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Footer z napisem Allezon (Szablon JSF) -->
-                <div>
-                    <ui:insert name="footer">
-                        <ui:include src="/templates/footer.xhtml"/>
-                    </ui:insert>
-                </div>
-
             </div>
         </div>
+
     </div>
 
 
 </h:body>
 
 </html>
-

@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+
+    <title>Allezon</title>
+    <h:outputStylesheet name="main.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.css" library="css"/>
+    <h:outputStylesheet name="fontello.css" library="css"/>
+    <h:outputStylesheet name="html-background.css" library="css"/>
+
+</h:head>
+
+<h:body style="background-color: lightgray;">
+
+    <ui:include src="/templates/topbar.xhtml"/>
+
+    <div>
+
+        <div id="viewport">
+
+            <ui:include src="/templates/sidebar.xhtml"/>
+
+            <div id="content">
+                <div class="container-fluid" style="margin-top: 10px;">
+
+                    <!-- Napis nad formularzem -->
+                    <div class="row">
+                        <div class="col-lg">
+                            <div>
+                                <div style="color: black; text-align: center">
+                                    <h4>Add new auction</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formularz dodawania aukcji -->
+                    <h:form enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-lg">
+                                <div align="center">
+
+                                    <h:message for="titleField"/>
+                                    <!-- Tytuł -->
+                                    <h:inputText value="#{addAuctionRequest.title}"
+                                                 id="titleField"
+                                                 a:placeholder="Title (e.g Passat B6 for sale)"
+                                                 required="true"
+
+                                                 requiredMessage="#{msg['jaz.allezon.validator.auction.title']}"
+                                                 styleClass="form-control item-centered"
+                                                 style="width: 500px; height: 50px; background-color: white; color: black"/>
+
+                                    <!-- Opis -->
+                                    <h:inputTextarea value="#{addAuctionRequest.description}"
+                                                     id="descriptionField"
+                                                     a:placeholder="Description"
+                                                     styleClass="form-control item-centered"
+                                                     style="width: 500px; height: 348px; background-color: white; color: black"/>
+
+
+                                    <!-- Lista kategorii -->
+                                    <h:selectOneMenu  value="#{addAuctionRequest.categoryName}"
+                                                      styleClass="browser-default custom-select drop"
+                                                      style="width: 500px; height: 50px">
+                                        <c:forEach items="#{categoryRepository.categories}" var="category" varStatus="metadata">
+                                            <f:selectItem itemValue="#{category.name}"
+                                                          itemLabel="#{category.section.name} - #{category.name}" />
+                                        </c:forEach>
+
+                                    </h:selectOneMenu>
+                                    <br />
+
+                                    <h:message for="priceField"/>
+                                    <!-- Cena -->
+                                    <h:inputText value="#{addAuctionRequest.price}"
+                                                 id="priceField"
+                                                 a:placeholder="Price (e.g. 25.99)"
+                                                 required="true"
+                                                 requiredMessage="#{msg['jaz.allezon.validator.auction.price']}"
+                                                 validatorMessage="#{msg['jaz.allezon.validator.auction.price.format']}"
+                                                 styleClass="form-control item-centered"
+                                                 style="width: 500px; height: 50px; background-color: white; color: black">
+                                        <f:validateRegex pattern="^\d+(\.\d{1,2}|\,\d{1,2})?+$"/>
+                                    </h:inputText>
+
+                                    <!-- Zdjęcia -->
+
+                                    <b><h:outputText value="Miniature"/></b><br />
+
+                                    <h:message for="miniatureField"/>
+                                    <h:inputFile value="#{addAuctionRequest.miniature}"
+                                                 id="miniatureField"
+                                                 required="true"
+                                                 requiredMessage="#{msg['jaz.allezon.validator.auction.photos']}"
+                                                 styleClass="form-control-file"
+                                                 style="width: 270px"/>
+
+                                    <b><h:outputText value="Photos"/></b><br />
+
+                                    <h:message for="photo1Field"/>
+                                    <h:inputFile value="#{addAuctionRequest.photo1}"
+                                                 id="photo1Field"
+                                                 required="true"
+                                                 requiredMessage="#{msg['jaz.allezon.validator.auction.photos']}"
+                                                 styleClass="form-control-file"
+                                                 style="width: 270px"/>
+
+                                    <h:message for="photo2Field"/>
+                                    <h:inputFile value="#{addAuctionRequest.photo2}"
+                                                 id="photo2Field"
+                                                 required="true"
+                                                 requiredMessage="#{msg['jaz.allezon.validator.auction.photos']}"
+                                                 styleClass="form-control-file"
+                                                 style="width: 270px"/>
+
+                                    <h:message for="photo3Field"/>
+                                    <h:inputFile value="#{addAuctionRequest.photo3}"
+                                                 id="photo3Field"
+                                                 required="true"
+                                                 requiredMessage="#{msg['jaz.allezon.validator.auction.photos']}"
+                                                 styleClass="form-control-file"
+                                                 style="width: 270px"/>
+
+                                    <!-- Przycisk dodawania aukcji -->
+                                    <h:commandButton value="Submit"
+                                                     action="#{auctionController.add}"
+                                                     styleClass="btn btn-info"
+                                                     style="margin-top: 10px; width: 270px; height: 40px; float: none;"/>
+                                </div>
+                            </div>
+
+                            <!-- Parametry JSF AJAX DYNAMIC -->
+                            <!-- "partial/ajax equals req get header faces request -->
+                            <div class="col-lg">
+                                <h:outputText value="#{msg['jaz.allezon.validator.auction.parameters.repeated']}"
+                                              rendered="#{auctionController.parametersRepeated}"/>
+                                <c:forEach items="#{auctionParametersRequest.parameterValues}" var="parameterValue" varStatus="metadata">
+
+                                    <div class="input-group">
+                                        <h:selectOneMenu value="#{auctionParametersRequest.parameterNames[metadata.index]}"
+                                                         styleClass="browser-default custom-select"
+                                                         style="width: 150px; height: 50px">
+                                            <f:selectItem itemValue="" itemLabel="--Select a parameter--" itemDisabled="true"/>
+                                            <c:forEach items="#{auctionRepository.parameters}" var="parameter" varStatus="metadata">
+                                                <f:selectItem itemValue="#{parameter.name}" itemLabel="#{parameter.name}" />
+                                            </c:forEach>
+                                        </h:selectOneMenu>
+
+                                        <span class="input-group-addon"> </span>
+
+                                        <h:inputText value="#{parameterValue}"
+                                                     id="parameterValueField"
+                                                     a:placeholder="#{parameterValue}"
+                                                     styleClass="form-control item-centered"
+                                                     style="width: 150px; height: 50px; background-color: white; color: black"/>
+                                    </div>
+                                    <br />
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <div class="row">
+                        <div class="col-lg">
+                            <div>
+                                <div>
+                                    <ui:insert name="footer">
+                                        <ui:include src="/templates/footer.xhtml"/>
+                                    </ui:insert>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</h:body>
+
+</html>

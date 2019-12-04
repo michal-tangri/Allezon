@@ -1,56 +1,66 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 <h:head>
 
     <title>Allezon</title>
     <h:outputStylesheet name="main.css" library="css"/>
     <h:outputStylesheet name="bootstrap.css" library="css"/>
+    <h:outputStylesheet name="fontello.css" library="css"/>
+    <h:outputStylesheet name="html-background.css" library="css"/>
 
 </h:head>
 
 <h:body style="background-color: lightgray;">
 
-    <!-- Logo Allezon (Szablon JSF) -->
+    <ui:include src="/templates/topbar.xhtml"/>
+
     <div>
-        <ui:insert name="logo" >
-            <ui:include src="/templates/logo.xhtml" />
-        </ui:insert>
-    </div>
 
-    <div class="container" style="color: black">
-        <div class="row" style="float: none; margin-top: 100px;">
-            <div class="col-lg-6" style="float: none; margin: auto">
+    <div id="viewport">
 
-                <div style="text-align: center;">
+        <ui:include src="/templates/sidebar.xhtml"/>
 
-                    <!-- Wiadomość powitalna z imieniem i nazwiskiem -->
-                    <h2>
-                        Welcome <h:outputText value="#{currentSession.name}"/> <h:outputText value="#{currentSession.surname}"/>!
-                    </h2>
+        <div id="content">
+            <div class="container-fluid" style="margin-top: 10px;">
 
-                    <!-- Przycisk wylogowania -->
-                    <h:form>
-                        <h:commandButton value="Logout"
-                                         action="#{currentSession.closeSession}"
-                                         styleClass="btn btn-info"
-                                         style="margin-top: 10px; width: 270px; height: 40px; float: none;" />
-                    </h:form>
-
+                <div class="row">
+                    <div class="col-lg">
+                        <div>
+                            <div style="color: black; text-align: center">
+                                <h2>
+                                    Welcome <h:outputText value="#{currentSession.name}"/> <h:outputText
+                                            value="#{currentSession.surname}"/>!
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Footer z napisem Allezon (Szablon JSF) -->
-                <div>
-                    <ui:insert name="footer" >
-                        <ui:include src="/templates/footer.xhtml" />
-                    </ui:insert>
+                <div class="row">
+                    <div class="col-lg">
+                        <div>
+                            <div>
+                                <ui:insert name="footer">
+                                    <ui:include src="/templates/footer.xhtml"/>
+                                </ui:insert>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
         </div>
+    </div>
+
     </div>
 
 </h:body>

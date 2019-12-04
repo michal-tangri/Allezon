@@ -1,4 +1,106 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500');
+
 .item-centered {
     float: none;
     margin: auto;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+/* Toggle Styles */
+
+#viewport {
+    padding-left: 300px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#content {
+    width: 100%;
+    position: relative;
+    margin-right: 0;
+}
+
+/* Sidebar Styles */
+
+#sidebar {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 300px;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #0040ae;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    margin-top: -10px;
+}
+
+#sidebar header {
+    background-color: #0040ae;
+    font-size: 20px;
+    line-height: 52px;
+    text-align: center;
+}
+
+#sidebar header a {
+    color: #fff;
+    display: block;
+    text-decoration: none;
+}
+
+#topBar header{
+    background-color: #00348f;
+    font-size: 20px;
+    line-height: 52px;
+    text-align: center;
+    border-bottom: 1px solid dimgrey;
+}
+
+#topBar header a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#sidebar header a:hover {
+    color: #fff;
+}
+
+#sidebar .nav{
+
+}
+
+
+#sidebar .nav a i{
+    margin-right: 16px;
+}
+
+.hr {
+    margin-left: 10px;
+    border-top: 1px solid white;
+}
+
+.welcome-background {
+    background-image: url("#{resource['img/welcome-page-background.jpg']}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    min-height: 100%;
+}
+
+.auth-background {
+    background-image: url("#{resource['img/auth-background.jpg']}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    min-height: 100%;
 }

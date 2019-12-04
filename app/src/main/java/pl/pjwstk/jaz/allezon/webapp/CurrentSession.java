@@ -1,10 +1,9 @@
-package pl.pjwstk.jaz.allezon;
+package pl.pjwstk.jaz.allezon.webapp;
+
+import pl.pjwstk.jaz.allezon.webapp.AllezonUtils;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import java.io.IOException;
 import java.io.Serializable;
 
 @Named
@@ -16,6 +15,11 @@ public class CurrentSession implements Serializable {
     private String username;
     private boolean isLogged;
     private boolean isAdmin;
+
+    public void closeSession() {
+        this.isLogged = false;
+        AllezonUtils.redirectToPage("/welcome.xhtml");
+    }
 
     public boolean isAdmin() {
         return isAdmin;
@@ -57,15 +61,4 @@ public class CurrentSession implements Serializable {
         isLogged = logged;
     }
 
-    public void closeSession() {
-        this.isLogged = false;
-
-        //https://stackoverflow.com/questions/16776981/response-object-in-jsf
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        try {
-            externalContext.redirect(externalContext.getApplicationContextPath() + "/login.xhtml");
-        } catch (IOException exception0) {
-            System.out.println("Failed to redirect to login.xhtml");
-        }
-    }
 }

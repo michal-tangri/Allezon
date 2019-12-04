@@ -20,7 +20,7 @@
     </context-param>
 
     <welcome-file-list>
-        <welcome-file>index.xhtml</welcome-file>
+        <welcome-file>welcome.xhtml</welcome-file>
     </welcome-file-list>
 
     <servlet>

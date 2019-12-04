@@ -1,1 +1,7 @@
 build/
+/out/production/resources/db.changelog/20191119_init.sql
+/out/production/resources/db.changelog/20191123_init.sql
+/out/production/resources/db.changelog/admin_init.sql
+/out/production/resources/db.changelog/db.changelog.yaml
+/out/production/resources/META-INF/
+/out/production/resources/Messages.properties
