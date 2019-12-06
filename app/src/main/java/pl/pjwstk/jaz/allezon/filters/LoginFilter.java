@@ -1,4 +1,4 @@
-package pl.pjwstk.jaz.allezon.login;
+package pl.pjwstk.jaz.allezon.filters;
 
 import pl.pjwstk.jaz.allezon.webapp.CurrentSession;
 
@@ -20,19 +20,30 @@ public class LoginFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
 
+        //URL variables
         String contextPath = req.getContextPath();
         String currentPath = contextPath + req.getServletPath();
 
+        //Pages that does not require being logged in
+        boolean userOnWelcomePage = currentPath.contains("/welcome.xhtml");
+        boolean userOnLoginPage = currentPath.contains("/login.xhtml");
+        boolean userOnRegisterPage = currentPath.contains("/register.xhtml");
+
+        //Management pages
+        boolean userOnAdminPage = currentPath.contains("/adminPanel.xhtml");
+
+        boolean userOnSectionsPage = currentPath.contains("/sections.xhtml");
+        boolean userOnSectionsListPage = currentPath.contains("/sectionsList.xhtml");
+
+        boolean userOnCategoriesPage = currentPath.contains("/categories.xhtml");
+        boolean userOnCategoriesListPage = currentPath.contains("/categoriesList.xhtml");
+
+        //Resources
+        boolean isResource = req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/");
+
+        //Main logic
         boolean userAdmin = currentSession.isAdmin();
         boolean userLogged = currentSession.isLogged();
-        boolean userOnLoginPage = currentPath.contains("/login.xhtml");
-        boolean userOnAdminPage = currentPath.contains("/admin_panel.xhtml");
-        boolean userOnWelcomePage = currentPath.contains("/welcome.xhtml");
-        boolean userOnRegisterPage = currentPath.contains("/register.xhtml");
-        boolean userOnSectionsPage = currentPath.contains("/sections.xhtml");
-        boolean userOnCategoriesPage = currentPath.contains("/categories.xhtml");
-
-        boolean isResource = req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/");
 
         if(isResource) {
             chain.doFilter(req, res);
@@ -41,7 +52,7 @@ public class LoginFilter extends HttpFilter {
             if(userOnLoginPage || userOnRegisterPage || userOnWelcomePage) {
                 res.sendRedirect(contextPath + "/index.xhtml");
             }
-            else if(userOnAdminPage || userOnSectionsPage || userOnCategoriesPage) {
+            else if(userOnAdminPage || userOnSectionsPage || userOnSectionsListPage|| userOnCategoriesPage || userOnCategoriesListPage) {
                 if(userAdmin)
                     chain.doFilter(req, res);
                 else
