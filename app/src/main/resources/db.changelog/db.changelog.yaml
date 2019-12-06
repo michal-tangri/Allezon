@@ -27,3 +27,10 @@ databaseChangeLog:
         relativeToChangelogFile: true
         splitStatements: false
         path: parameters_init.sql
+  - changeSet:
+      id: sections_init
+      author: Michał Tangri
+      sqlFile:
+        relativeToChangelogFile: true
+        splitStatements: false
+        path: sections_init.sql

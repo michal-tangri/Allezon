@@ -1,53 +1,83 @@
 package pl.pjwstk.jaz.allezon.sections;
 
-import pl.pjwstk.jaz.allezon.repositories.SectionRepository;
 import pl.pjwstk.jaz.allezon.entities.sections.Section;
+import pl.pjwstk.jaz.allezon.webapp.AllezonUtils;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.NoSuchElementException;
 
 @Named
 @RequestScoped
 public class SectionController {
 
     @Inject
-    AddSectionRequest addRequest;
+    private SectionRepository sectionRepository;
 
     @Inject
-    EditSectionRequest editRequest;
+    private AllezonUtils utils;
 
-    @Inject
-    SectionRepository database;
+    private SectionRequest sectionRequest;
 
-    private boolean addingSectionSuccessful = false;
+    private boolean sectionAlreadyExists = false;
+    private boolean changingSectionsSuccessful = false;
+    private boolean sectionDoesNotExist = false;
+    private boolean wrongParameterInLink = false;
 
-    private boolean editingSectionSuccessful = false;
-
-    public void add() {
-        String sectionName = addRequest.getName();
-        if (!sectionName.equals("")) {
-            Section newSection = new Section(sectionName);
-            database.addSection(newSection);
-            addRequest.setName(null);
-            addingSectionSuccessful = true;
+    public void save() {
+        Section section = sectionRequest.toSection();
+        try {
+            sectionRepository.save(section);
+            changingSectionsSuccessful = true;
+        }
+        catch (Exception err0) {
+            sectionAlreadyExists = true;
         }
     }
 
-    public void edit() {
-        String sectionNewName = editRequest.getNewName();
-        if (!sectionNewName.equals("")) {
-            database.editSection(editRequest.getName(), editRequest.getNewName());
-            editRequest.setNewName(null);
-            editingSectionSuccessful = true;
+    private SectionRequest createSectionRequest() {
+        if(utils.linkContains("sectionId")) {
+            var sectionId = utils.getLongFromLink("sectionId");
+
+            if(sectionId == null) {
+                wrongParameterInLink = true;
+                return new SectionRequest();
+            }
+
+            var section = new Section();
+            try {
+                section = sectionRepository.findSectionById(sectionId).orElseThrow();
+            }
+            catch (NoSuchElementException err0) {
+                sectionDoesNotExist = true;
+            }
+            return new SectionRequest(section);
         }
+        return new SectionRequest();
     }
 
-    public boolean isAddingSectionSuccessful() {
-        return addingSectionSuccessful;
+    //Getters and setters
+
+    public SectionRequest getSectionRequest() {
+        if(sectionRequest == null)
+            sectionRequest = createSectionRequest();
+        return sectionRequest;
     }
 
-    public boolean isEditingSectionSuccessful() {
-        return editingSectionSuccessful;
+    public boolean isChangingSectionsSuccessful() {
+        return changingSectionsSuccessful;
+    }
+
+    public boolean isWrongParameterInLink() {
+        return wrongParameterInLink;
+    }
+
+    public boolean isSectionAlreadyExists() {
+        return sectionAlreadyExists;
+    }
+
+    public boolean isSectionDoesNotExist() {
+        return sectionDoesNotExist;
     }
 }

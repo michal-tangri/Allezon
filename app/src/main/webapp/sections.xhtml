@@ -1,160 +1,123 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 
     <title>Allezon</title>
     <h:outputStylesheet name="main.css" library="css"/>
     <h:outputStylesheet name="bootstrap.css" library="css"/>
+    <h:outputStylesheet name="fontello.css" library="css"/>
+    <h:outputStylesheet name="html-background.css" library="css"/>
 
 </h:head>
 
 <h:body style="background-color: lightgray;">
 
-    <div class="container" style="margin-top: 12%;">
+    <ui:include src="/templates/topbar.xhtml"/>
 
-        <!-- Logo -->
-        <div class="row">
-            <div class="col-lg">
-                <div>
-                    <ui:insert name="logo">
-                        <ui:include src="/templates/logo.xhtml"/>
-                    </ui:insert>
-                </div>
-            </div>
-        </div>
+    <div>
 
-        <!-- Napis nad formularzem dodawania działu -->
-        <div class="row">
-            <div class="col-lg">
-                <div>
-                    <div style="color: black; text-align: center">
-                        <h4><b>Add section</b></h4>
-                    </div>
-                </div>
-            </div>
+        <div id="viewport">
 
-            <div class="col-lg">
-                <div>
-                    <div style="color: black; text-align: center">
-                        <h4><b>Edit section</b></h4>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <ui:include src="/templates/sidebar.xhtml"/>
 
-        <!-- Formularz dodawania działu -->
-        <div class="row">
-            <div class="col-lg">
-                <div>
-                    <div align="center">
+            <div id="content">
+                <div class="container-fluid" style="margin-top: 10px;">
 
-                        <h:form>
-                            <!-- Wiadomość wyświetlana przy udanej próbie dodania działu -->
-                            <h:outputText value="#{msg['jaz.allezon.validator.section.add.successful']}"
-                                          rendered="#{sectionController.addingSectionSuccessful}"/>
-
-                            <h:message for="nameField" />
-
-                            <!-- Nazwa -->
-                            <h:inputText value="#{addSectionRequest.name}"
-                                         id="nameField"
-                                         required="true"
-                                         requiredMessage="#{msg['jaz.allezon.validator.section.unsuccessful']}"
-                                         a:placeholder="Section name"
-                                         styleClass="form-control item-centered"
-                                         style="width: 270px; height: 50px; background-color: white; color: black"/>
-
-                            <!-- Przycisk dodawania działu -->
-                            <h:commandButton value="Add"
-                                             action="#{sectionController.add}"
-                                             styleClass="btn btn-info"
-                                             style="margin-top: 10px; width: 270px; height: 40px;"/>
-                        </h:form>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg">
-                <div>
-                    <div align="center">
-
-                        <h:form>
-                            <!-- Wiadomość wyświetlana przy udanej próbie edycji działu -->
-                            <h:outputText value="#{msg['jaz.allezon.validator.section.edit.successful']}"
-                                          rendered="#{sectionController.editingSectionSuccessful}"/>
-
-                            <h:message for="newNameField"/>
-
-                            <!-- Nowa nazwa -->
-                            <h:inputText value="#{editSectionRequest.newName}"
-                                         id="newNameField"
-                                         required="true"
-                                         requiredMessage="#{msg['jaz.allezon.validator.section.unsuccessful']}"
-                                         a:placeholder="New section name"
-                                         styleClass="form-control item-centered"
-                                         style="width: 270px; height: 50px; background-color: white; color: black"/>
-
-                            <!-- Stara nazwa -->
-                            <h:selectOneMenu  value="#{editSectionRequest.name}"
-                                              styleClass="browser-default custom-select"
-                                              style="width: 270px; height: 50px">
-
-                                <c:forEach items="#{sectionRepository.sections}" var="section" varStatus="metadata">
-                                    <f:selectItem itemValue="#{section.name}" itemLabel="#{section.name}" />
-                                </c:forEach>
-
-                            </h:selectOneMenu>
-
-
-                            <!-- Przycisk zatwierdzania edycji działu -->
-                            <h:commandButton value="Edit"
-                                             action="#{sectionController.edit}"
-                                             styleClass="btn btn-info"
-                                             style="margin-top: 10px; width: 270px; height: 40px;"/>
-
-                        </h:form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg">
-                <div>
-                    <div>
-                        <div align="center">
-                            <!-- Przycisk przekierowujący do panelu administratora -->
-                            <a href="admin_panel.xhtml" class="btn btn-info"
-                               style="margin-top: 50px; width: 270px; height: 40px; float: none;">
-                                Back
-                            </a>
+                    <!-- Napis nad formularzem działów -->
+                    <div class="row">
+                        <div class="col-lg">
+                            <div>
+                                <div style="color: black; text-align: center">
+                                    <h4>Manage section</h4>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Formularz działów -->
+                    <div class="row">
+                        <div class="col-lg">
+                            <div>
+                                <div style="color: black; text-align: center" align="center">
+                                    <h:form>
+                                        <!-- Wiadomość wyświetlana przy udanym zapisie działów -->
+                                        <h:outputText value="#{msg['jaz.allezon.validator.section.successful']}"
+                                                      rendered="#{sectionController.changingSectionsSuccessful}"/>
+
+                                        <!-- Wiadomość wyświetlana przy próbie dodania istniejącego już działu -->
+                                        <h:outputText value="#{msg['jaz.allezon.validator.section.alreadyExists']}"
+                                                      rendered="#{sectionController.sectionAlreadyExists}"/>
+
+                                        <h:message for="nameField"/>
+
+                                        <!-- ID -->
+                                        <h:inputHidden value="#{sectionController.sectionRequest.id}"/>
+
+                                        <!-- Nazwa -->
+                                        <h:inputText value="#{sectionController.sectionRequest.name}"
+                                                     id="nameField"
+                                                     required="true"
+                                                     requiredMessage="#{msg['jaz.allezon.validator.section.unsuccessful']}"
+                                                     rendered="#{not sectionController.sectionDoesNotExist and not sectionController.wrongParameterInLink}"
+                                                     a:placeholder="Section name"
+                                                     styleClass="form-control item-centered"
+                                                     style="width: 270px; height: 50px; background-color: white; color: black"/>
+
+                                        <!-- Przycisk dodawania działu -->
+                                        <h:commandButton value="Save"
+                                                         action="#{sectionController.save}"
+                                                         rendered="#{not sectionController.sectionDoesNotExist and not sectionController.wrongParameterInLink}"
+                                                         styleClass="btn btn-info"
+                                                         style="margin-top: 10px; width: 270px; height: 40px;"/>
+                                    </h:form>
+
+                                    <h:outputText value="#{msg['jaz.allezon.validator.section.doesNotExist']}"
+                                                  rendered="#{sectionController.sectionDoesNotExist}"
+                                                  style="font-size: 36px"/>
+
+                                    <h:outputText value="#{msg['jaz.allezon.validator.section.wrongParameter']}"
+                                                  rendered="#{sectionController.wrongParameterInLink}"
+                                                  style="font-size: 36px"/>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg">
+                            <div align="center">
+                                <h:link value="Back"
+                                        outcome="sectionsList.xhtml"
+                                        styleClass="btn btn-info"
+                                        style="width: 270px; height: 40px; margin-top: 10px;"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg">
+                            <div>
+                                <div>
+                                    <ui:insert name="footer">
+                                        <ui:include src="/templates/footer.xhtml"/>
+                                    </ui:insert>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg">
-                <div>
-                    <div>
-                        <ui:insert name="footer">
-                            <ui:include src="/templates/footer.xhtml"/>
-                        </ui:insert>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
 </h:body>
