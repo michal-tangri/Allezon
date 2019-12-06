@@ -1,18 +1,31 @@
 package pl.pjwstk.jaz.allezon.register;
 
+import org.mindrot.jbcrypt.BCrypt;
+import pl.pjwstk.jaz.allezon.auth.ProfileEntity;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 @Named
 @RequestScoped
 public class RegisterRequest {
+
     private String name;
     private String surname;
     private String password;
-    private String passwordRepeat;
+    private String passwordRepeated;
     private String username;
     private String emailAddress;
     private String dateOfBirth;
+
+    public ProfileEntity toProfileEntity() {
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        return new ProfileEntity(username, name, surname, hashedPassword, emailAddress, dateOfBirth, false);
+    }
+
+    public boolean doPasswordsMatch() {
+        return password.equals(passwordRepeated);
+    }
 
     @Override
     public String toString() {
@@ -73,11 +86,11 @@ public class RegisterRequest {
         this.name = name;
     }
 
-    public String getPasswordRepeat() {
-        return passwordRepeat;
+    public String getPasswordRepeated() {
+        return passwordRepeated;
     }
 
-    public void setPasswordRepeat(String passwordRepeat) {
-        this.passwordRepeat = passwordRepeat;
+    public void setPasswordRepeated(String passwordRepeated) {
+        this.passwordRepeated = passwordRepeated;
     }
 }

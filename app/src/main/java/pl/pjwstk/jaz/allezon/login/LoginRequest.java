@@ -6,6 +6,7 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class LoginRequest {
+
     private String username;
     private String password;
 
