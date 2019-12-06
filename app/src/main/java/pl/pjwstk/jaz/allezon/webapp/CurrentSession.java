@@ -1,8 +1,7 @@
 package pl.pjwstk.jaz.allezon.webapp;
 
-import pl.pjwstk.jaz.allezon.webapp.AllezonUtils;
-
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
@@ -10,23 +9,26 @@ import java.io.Serializable;
 @SessionScoped
 public class CurrentSession implements Serializable {
 
+    @Inject
+    AllezonUtils utils;
+
     private String name;
     private String surname;
     private String username;
-    private boolean isLogged;
-    private boolean isAdmin;
+    private boolean logged;
+    private boolean admin;
 
     public void closeSession() {
-        this.isLogged = false;
-        AllezonUtils.redirectToPage("/welcome.xhtml");
+        this.logged = false;
+        utils.redirectToPage("/welcome.xhtml");
     }
 
     public boolean isAdmin() {
-        return isAdmin;
+        return admin;
     }
 
     public void setAdmin(boolean admin) {
-        isAdmin = admin;
+        this.admin = admin;
     }
 
     public String getName() {
@@ -54,11 +56,11 @@ public class CurrentSession implements Serializable {
     }
 
     public boolean isLogged() {
-        return isLogged;
+        return logged;
     }
 
     public void setLogged(boolean logged) {
-        isLogged = logged;
+        this.logged = logged;
     }
 
 }
