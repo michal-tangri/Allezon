@@ -2,63 +2,84 @@ package pl.pjwstk.jaz.allezon.categories;
 
 import pl.pjwstk.jaz.allezon.entities.sections.Category;
 import pl.pjwstk.jaz.allezon.entities.sections.Section;
-import pl.pjwstk.jaz.allezon.repositories.CategoryRepository;
-import pl.pjwstk.jaz.allezon.repositories.SectionRepository;
+import pl.pjwstk.jaz.allezon.sections.SectionRepository;
+import pl.pjwstk.jaz.allezon.webapp.AllezonUtils;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.NoSuchElementException;
 
 @Named
 @RequestScoped
 public class CategoryController {
 
     @Inject
-    AddCategoryRequest addRequest;
+    private CategoryRepository categoryRepository;
 
     @Inject
-    EditCategoryRequest editRequest;
+    private AllezonUtils utils;
 
-    @Inject
-    CategoryRepository database;
+    private CategoryRequest categoryRequest;
 
-    @Inject
-    SectionRepository sectionDatabase;
+    private boolean categoryAlreadyExists = false;
+    private boolean changingCategorySuccessful = false;
+    private boolean categoryDoesNotExist = false;
+    private boolean wrongParameterInLink = false;
 
-    private boolean addingCategorySuccessful = false;
-
-    private boolean editingCategorySuccessful = false;
-
-    public void add() {
-        String name = addRequest.getName();
-        String sectionName = addRequest.getSectionName();
-        if(!name.equals("")) {
-            Section section = sectionDatabase.getSection(sectionName);
-            Category category = new Category(name, section);
-            database.addCategory(category);
-            addRequest.setName(null);
-            addingCategorySuccessful = true;
+    public void save() {
+        Category category = categoryRequest.toCategory();
+        category.setSection(categoryRepository.findSectionByName(categoryRequest.getSectionName()));
+        try {
+            categoryRepository.save(category);
+            changingCategorySuccessful = true;
+        }
+        catch (Exception err0) {
+            categoryAlreadyExists = true;
         }
     }
 
-    public void edit() {
-        String categoryName = editRequest.getName();
-        String categoryNewName = editRequest.getNewName();
+    private CategoryRequest createCategoryRequest() {
+        if(utils.linkContains("categoryId")) {
+            var categoryId = utils.getLongFromLink("categoryId");
 
-        if(categoryNewName.equals("")) {
-            categoryNewName = categoryName;
+            if(categoryId == null) {
+                wrongParameterInLink = true;
+                return new CategoryRequest();
+            }
+
+            var category = new Category();
+            try {
+                category = categoryRepository.findCategoryById(categoryId).orElseThrow();
+            }
+            catch (NoSuchElementException err0) {
+                categoryDoesNotExist = true;
+            }
+            return new CategoryRequest(category);
         }
-
-        Section section = sectionDatabase.getSection(editRequest.getSectionName());
-        database.editCategory(categoryName, categoryNewName, section);
-        editingCategorySuccessful = true;
+        return new CategoryRequest();
     }
 
-    public boolean isEditingCategorySuccessful() {
-        return editingCategorySuccessful;
+    //Getters and setters
+    public CategoryRequest getCategoryRequest() {
+        if(categoryRequest == null)
+            categoryRequest = createCategoryRequest();
+        return categoryRequest;
     }
 
-    public boolean isAddingCategorySuccessful() {
-        return addingCategorySuccessful;
+    public boolean isCategoryAlreadyExists() {
+        return categoryAlreadyExists;
+    }
+
+    public boolean isChangingCategorySuccessful() {
+        return changingCategorySuccessful;
+    }
+
+    public boolean isCategoryDoesNotExist() {
+        return categoryDoesNotExist;
+    }
+
+    public boolean isWrongParameterInLink() {
+        return wrongParameterInLink;
     }
 }
