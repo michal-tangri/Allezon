@@ -74,7 +74,7 @@
                                         <!-- Dział -->
                                         <h:selectOneMenu  value="#{categoryController.categoryRequest.sectionName}"
                                                           rendered="#{not categoryController.categoryDoesNotExist and not categoryController.wrongParameterInLink}"
-                                                          styleClass="browser-default custom-select"
+                                                          styleClass="form-control browser-default custom-select"
                                                           style="width: 270px; height: 46px">
 
                                             <c:forEach items="#{categoryListController.getAllSections()}"
@@ -83,6 +83,8 @@
                                             </c:forEach>
 
                                         </h:selectOneMenu>
+
+                                        <br/>
 
                                         <!-- Przycisk dodawania kateogrii -->
                                         <h:commandButton value="Submit"
