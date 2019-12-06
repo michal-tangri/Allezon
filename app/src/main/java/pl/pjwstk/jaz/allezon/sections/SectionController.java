@@ -58,7 +58,6 @@ public class SectionController {
     }
 
     //Getters and setters
-
     public SectionRequest getSectionRequest() {
         if(sectionRequest == null)
             sectionRequest = createSectionRequest();

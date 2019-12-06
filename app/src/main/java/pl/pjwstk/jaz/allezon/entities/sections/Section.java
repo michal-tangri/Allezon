@@ -26,6 +26,11 @@ public class Section {
         this.name = name;
     }
 
+    public Section(Section section) {
+        this.id = section.getId();
+        this.name = section.getName();
+    }
+
     public String getName() {
         return name;
     }

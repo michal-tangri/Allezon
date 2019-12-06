@@ -71,10 +71,10 @@
                                                      style="width: 270px; height: 50px; background-color: white; color: black"/>
 
                                         <!-- Przycisk dodawania działu -->
-                                        <h:commandButton value="Save"
+                                        <h:commandButton value="Submit"
                                                          action="#{sectionController.save}"
                                                          rendered="#{not sectionController.sectionDoesNotExist and not sectionController.wrongParameterInLink}"
-                                                         styleClass="btn btn-info"
+                                                         styleClass="btn btn-primary"
                                                          style="margin-top: 10px; width: 270px; height: 40px;"/>
                                     </h:form>
 
@@ -96,7 +96,7 @@
                             <div align="center">
                                 <h:link value="Back"
                                         outcome="sectionsList.xhtml"
-                                        styleClass="btn btn-info"
+                                        styleClass="btn btn-primary"
                                         style="width: 270px; height: 40px; margin-top: 10px;"/>
                             </div>
                         </div>
