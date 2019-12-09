@@ -1,6 +1,6 @@
 package pl.pjwstk.jaz.allezon.entities.auctions;
 
-import pl.pjwstk.jaz.allezon.entities.ProfileEntity;
+import pl.pjwstk.jaz.allezon.auth.ProfileEntity;
 import pl.pjwstk.jaz.allezon.entities.sections.Category;
 
 import javax.persistence.*;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "auction")
-public class AuctionEntity {
+public class Auction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,18 +33,23 @@ public class AuctionEntity {
 
     @OneToMany(
             mappedBy = "auction",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            cascade = {CascadeType.MERGE, CascadeType.REMOVE},
             orphanRemoval = true)
-    private List<PhotoEntity> photos;
+    private List<Photo> photos;
 
     @OneToMany(
             mappedBy = "auction",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             orphanRemoval = true)
-    private List<AuctionParameterEntity> parameters;
+    private List<AuctionParameter> parameters;
 
-    public AuctionEntity() {
+    public Auction() {
+    }
 
+    public Auction(Long id, String title, String description, Double price) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
     }
 
     public Long getId() {
@@ -83,11 +88,11 @@ public class AuctionEntity {
         this.category = category;
     }
 
-    public List<PhotoEntity> getPhotos() {
+    public List<Photo> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<PhotoEntity> photos) {
+    public void setPhotos(List<Photo> photos) {
         this.photos = photos;
     }
 
@@ -99,11 +104,11 @@ public class AuctionEntity {
         this.profile = profile;
     }
 
-    public List<AuctionParameterEntity> getParameters() {
+    public List<AuctionParameter> getParameters() {
         return parameters;
     }
 
-    public void setParameters(List<AuctionParameterEntity> parameters) {
+    public void setParameters(List<AuctionParameter> parameters) {
         this.parameters = parameters;
     }
 }

@@ -5,7 +5,11 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 
 //https://stackoverflow.com/questions/16776981/response-object-in-jsf
 
@@ -36,5 +40,31 @@ public class AllezonUtils {
         } catch (IOException redirectException) {
             System.out.println("Failed to redirect to " + pageURL);
         }
+    }
+
+    /*
+        Jeżeli nie ładują się zdjęcia po dodaniu
+        WebServlet z linkiem do zdjęcia
+        doGet
+        nagłówki content type
+
+    */
+    public String saveImageToFile(Part file, String newFileName) throws IllegalArgumentException {
+        String originalFileName = file.getSubmittedFileName();
+
+        if(!originalFileName.endsWith(".png") && !originalFileName.endsWith(".jpg") && !originalFileName.endsWith(".jpeg"))
+            throw new IllegalArgumentException();
+
+        String fileName = (newFileName + System.nanoTime() + originalFileName)
+                .replaceAll("\\s","");
+
+        try (InputStream input = file.getInputStream()) {
+            File newFile = new File("/home/michaltangri/auction_photos", fileName);
+            Files.copy(input, newFile.toPath());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileName;
     }
 }

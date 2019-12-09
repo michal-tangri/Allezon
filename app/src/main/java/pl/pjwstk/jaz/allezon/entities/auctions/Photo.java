@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "photos")
-public class PhotoEntity {
+public class Photo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,15 +15,14 @@ public class PhotoEntity {
 
     @ManyToOne
     @JoinColumn(name = "auction_id")
-    private AuctionEntity auction;
+    private Auction auction;
 
-    public PhotoEntity(String filePath, AuctionEntity auction) {
-        this.filePath = filePath;
-        this.auction = auction;
+    public Photo() {
     }
 
-    public PhotoEntity() {
-
+    public Photo(String filePath, Auction auction) {
+        this.filePath = filePath;
+        this.auction = auction;
     }
 
     public void setId(Long id) {

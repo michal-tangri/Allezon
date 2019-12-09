@@ -1,6 +1,7 @@
 package pl.pjwstk.jaz.allezon.entities.auctions;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 //@MapsId()
 //@Column
@@ -8,24 +9,35 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "auction_parameter")
-public class AuctionParameterEntity {
+public class AuctionParameter implements Serializable {
 
     @EmbeddedId
     private AuctionParameterId id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
     @MapsId("parameterId")
     @JoinColumn(name = "parameter_id")
-    private ParameterEntity parameter;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Parameter parameter;
 
-    @ManyToOne
     @MapsId("auctionId")
     @JoinColumn(name = "auction_id")
-    private AuctionEntity auction;
+    @ManyToOne
+    private Auction auction;
 
     @Column(name = "value")
     private String value;
 
+    public AuctionParameter() {
+    }
+
+    public AuctionParameter(AuctionParameterId id, Parameter parameter, Auction auction, String value) {
+        this.id = id;
+        this.parameter = parameter;
+        this.auction = auction;
+        this.value = value;
+    }
+
+    //Getters and setters
     public AuctionParameterId getId() {
         return id;
     }
@@ -42,19 +54,21 @@ public class AuctionParameterEntity {
         this.value = value;
     }
 
-    public ParameterEntity getParameter() {
+    public Parameter getParameter() {
         return parameter;
     }
 
-    public void setParameter(ParameterEntity parameter) {
+    public void setParameter(Parameter parameter) {
         this.parameter = parameter;
+        this.id.setParameterId(parameter.getId());
     }
 
-    public AuctionEntity getAuction() {
+    public Auction getAuction() {
         return auction;
     }
 
-    public void setAuction(AuctionEntity auction) {
+    public void setAuction(Auction auction) {
         this.auction = auction;
+        this.id.setAuctionId(auction.getId());
     }
 }
