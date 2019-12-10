@@ -77,7 +77,7 @@
                                                           styleClass="form-control browser-default custom-select"
                                                           style="width: 270px; height: 46px">
 
-                                            <c:forEach items="#{categoryListController.getAllSections()}"
+                                            <c:forEach items="#{categoryController.getAllSections()}"
                                                        var="section" varStatus="metadata">
                                                 <f:selectItem itemValue="#{section.name}" itemLabel="#{section.name}" />
                                             </c:forEach>

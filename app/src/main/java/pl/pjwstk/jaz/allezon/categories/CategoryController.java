@@ -8,6 +8,7 @@ import pl.pjwstk.jaz.allezon.webapp.AllezonUtils;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Named
@@ -58,6 +59,10 @@ public class CategoryController {
             return new CategoryRequest(category);
         }
         return new CategoryRequest();
+    }
+
+    public List<Section> getAllSections() {
+        return categoryRepository.findAllSections();
     }
 
     //Getters and setters
