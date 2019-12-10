@@ -18,7 +18,6 @@ public class CategoryListController {
     private CategoryListRequest categoryListRequest;
 
     public void filter() {
-
     }
 
     public List<Section> getAllSections() {
