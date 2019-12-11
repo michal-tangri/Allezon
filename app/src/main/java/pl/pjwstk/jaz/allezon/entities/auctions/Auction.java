@@ -34,7 +34,8 @@ public class Auction {
     @OneToMany(
             mappedBy = "auction",
             cascade = {CascadeType.MERGE, CascadeType.REMOVE},
-            orphanRemoval = true)
+            orphanRemoval = true,
+            fetch = FetchType.EAGER)
     private List<Photo> photos;
 
     @OneToMany(
@@ -52,6 +53,14 @@ public class Auction {
         this.price = price;
     }
 
+    public String getMiniaturePath() {
+        Photo miniature = photos.get(0);
+        if(miniature != null)
+            return miniature.getFilePath();
+        return null;
+    }
+
+    //Getters and setters
     public Long getId() {
         return id;
     }

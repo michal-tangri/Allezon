@@ -11,10 +11,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 
-//https://stackoverflow.com/questions/16776981/response-object-in-jsf
-
 @ApplicationScoped
 public class AllezonUtils {
+
+    //Ścieżka do folderu potrzebnego aby zapisywać i odczytywać zdjęcia z dysku
+    private static final String PHOTOS_DIRECTORY_PATH = "/home/michaltangri/auction_photos";
 
     @Inject
     private HttpServletRequest request;
@@ -59,12 +60,18 @@ public class AllezonUtils {
                 .replaceAll("\\s","");
 
         try (InputStream input = file.getInputStream()) {
-            File newFile = new File("/home/michaltangri/auction_photos", fileName);
+            File newFile = new File(PHOTOS_DIRECTORY_PATH, fileName);
             Files.copy(input, newFile.toPath());
         }
         catch (IOException e) {
             e.printStackTrace();
         }
         return fileName;
+    }
+
+    //Getters and setters
+
+    public static String getPhotosDirectoryPath() {
+        return PHOTOS_DIRECTORY_PATH;
     }
 }

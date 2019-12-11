@@ -25,11 +25,13 @@ public class AuctionRepository {
 
     @Transactional
     public void save(Auction auction) {
-        if (auction.getId() == null) {
-            entityManager.merge(auction);
-        }
-        else
-            entityManager.merge(auction);
+        entityManager.merge(auction);
+    }
+
+    @Transactional
+    public List<Auction> findAllAuctionsByCategory(String name) {
+        return entityManager.createQuery("from Auction where category.name = :name", Auction.class)
+                .setParameter("name", name).getResultList();
     }
 
     @Transactional

@@ -1,4 +1,4 @@
-package pl.pjwstk.jaz.allezon;
+package pl.pjwstk.jaz.allezon.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

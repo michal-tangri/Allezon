@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<h:head>
+
+    <title>Allezon</title>
+    <h:outputStylesheet name="main.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.css" library="css"/>
+    <h:outputStylesheet name="fontello.css" library="css"/>
+    <h:outputStylesheet name="html-background.css" library="css"/>
+
+</h:head>
+
+<h:body style="background-color: lightgray;">
+
+    <ui:include src="/templates/topbar.xhtml"/>
+
+    <div>
+
+        <div id="viewport">
+
+            <ui:include src="/templates/sidebar.xhtml"/>
+
+            <div id="content">
+                <div class="container-fluid" style="margin-top: 10px;">
+
+                    <div class="row">
+                        <div class="col-lg">
+                            <div>
+                                <div style="color: black; text-align: center">
+                                    <h4>Auctions</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg">
+                            <div>
+                                <div align="center" style="margin-top: 10px">
+
+                                    <h:form>
+
+                                        <h:selectOneMenu
+                                                value="#{auctionListController.auctionListRequest.categoryName}"
+                                                styleClass="browser-default custom-select"
+                                                style="width: 270px; height: 46px">
+
+                                            <c:forEach items="#{auctionListController.getAllCategories()}"
+                                                       var="category" varStatus="metadata">
+                                                <f:selectItem itemValue="#{category.name}"
+                                                              itemLabel="#{category.section.name} - #{category.name}"/>
+                                            </c:forEach>
+
+                                        </h:selectOneMenu>
+
+                                        <h:commandButton value="Filter results"
+                                                         action="#{auctionListController.filter()}"
+                                                         styleClass="btn btn-primary"
+                                                         style="width: 270px; height: 44px"/>
+
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg">
+                            <div>
+                                <div align="center">
+
+                                    <div class="list-group" style="margin-top: 15px; margin-left: 20%; text-align: left">
+                                        <c:forEach
+                                                items="#{auctionListController.getAllAuctionsByCategory(auctionListController.auctionListRequest.categoryName)}"
+                                                var="auction">
+
+                                            <h:link outcome="auctions.xhtml"
+                                                    styleClass="list-group-item list-group-item-action"
+                                                    style="width: 75%; height: 170px">
+                                                <f:param name="auctionId" value="#{auction.id}"/>
+
+                                                <div style="display: inline; float: left;">
+                                                    <h:graphicImage
+                                                            value="/image?img=#{auction.getMiniaturePath()}"
+                                                            alt="No photos"
+                                                            style="width: 200px; height: 140px; border: 1px solid black"/>
+                                                </div>
+
+                                                <div style="margin-left: 210px">
+                                                    <table>
+                                                        <tr>
+                                                            <td>Title</td>
+                                                            <td>Price</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><b><h:outputText value="#{auction.title}"/></b></td>
+                                                            <td><h:outputText value="#{auction.price}"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><i><h:outputText value="#{auction.category.name}"/></i></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                            </h:link>
+                                        </c:forEach>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg">
+                            <div>
+                                <div>
+                                    <ui:insert name="footer">
+                                        <ui:include src="/templates/footer.xhtml"/>
+                                    </ui:insert>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</h:body>
+
+</html>
