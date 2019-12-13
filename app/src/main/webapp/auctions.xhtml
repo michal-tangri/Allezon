@@ -61,8 +61,10 @@
                                                                  id="titleField"
                                                                  a:placeholder="Title (e.g Passat B6 for sale)"
                                                                  required="true"
-
                                                                  requiredMessage="#{msg['jaz.allezon.validator.auction.title']}"
+                                                                 rendered="#{not auctionController.auctionDoesNotExist
+                                                                 and not auctionController.wrongParameterInLink
+                                                                 and not auctionController.wrongAuctionOwner}"
                                                                  styleClass="form-control item-centered"
                                                                  style="width: 500px; height: 50px; background-color: white; color: black"/>
 
@@ -70,12 +72,18 @@
                                                     <h:inputTextarea value="#{auctionController.auctionRequest.description}"
                                                                      id="descriptionField"
                                                                      a:placeholder="Description"
+                                                                     rendered="#{not auctionController.auctionDoesNotExist
+                                                                     and not auctionController.wrongParameterInLink
+                                                                     and not auctionController.wrongAuctionOwner}"
                                                                      styleClass="form-control item-centered"
                                                                      style="width: 500px; height: 348px; background-color: white; color: black"/>
 
 
                                                     <!-- Lista kategorii -->
                                                     <h:selectOneMenu  value="#{auctionController.auctionRequest.categoryName}"
+                                                                      rendered="#{not auctionController.auctionDoesNotExist
+                                                                      and not auctionController.wrongParameterInLink
+                                                                      and not auctionController.wrongAuctionOwner}"
                                                                       styleClass="browser-default custom-select drop"
                                                                       style="width: 500px; height: 50px">
                                                         <c:forEach items="#{auctionController.getAllCategories()}" var="category" varStatus="metadata">
@@ -94,6 +102,9 @@
                                                                  required="true"
                                                                  requiredMessage="#{msg['jaz.allezon.validator.auction.price']}"
                                                                  validatorMessage="#{msg['jaz.allezon.validator.auction.price.format']}"
+                                                                 rendered="#{not auctionController.auctionDoesNotExist
+                                                                 and not auctionController.wrongParameterInLink
+                                                                 and not auctionController.wrongAuctionOwner}"
                                                                  styleClass="form-control item-centered"
                                                                  style="width: 500px; height: 50px; background-color: white; color: black">
                                                         <f:validateRegex pattern="^\d+(\.\d{1,2}|\,\d{1,2})?+$"/>
@@ -104,6 +115,9 @@
                                                     <!-- Przycisk dodawania aukcji -->
                                                     <h:commandButton value="Submit"
                                                                      action="#{auctionController.save}"
+                                                                     rendered="#{not auctionController.auctionDoesNotExist
+                                                                     and not auctionController.wrongParameterInLink
+                                                                     and not auctionController.wrongAuctionOwner}"
                                                                      styleClass="btn btn-primary"
                                                                      style="margin-top: 10px; width: 270px; height: 40px; float: none;"/>
                                                 </div>
@@ -112,14 +126,17 @@
                                             <!-- Parametry JSF AJAX DYNAMIC -->
                                             <!-- "partial/ajax equals req get header faces request -->
                                             <div class="col-lg">
-                                                <h:outputText value="#{msg['jaz.allezon.validator.auction.parameters.repeated']}"
-                                                              rendered="#{auctionController.parametersRepeated}"/>
+                                                <b><h:outputText value="#{msg['jaz.allezon.validator.auction.parameters.repeated']}"
+                                                                 rendered="#{auctionController.parametersRepeated}"/></b>
 
                                                 <ui:param name="parametersList" value="#{auctionController.getAllParameters()}" />
                                                 <c:forEach items="#{auctionController.auctionRequest.parametersValues}" var="parameterValue" varStatus="metadata">
 
                                                     <div class="input-group">
                                                         <h:selectOneMenu value="#{auctionController.auctionRequest.parametersNames[metadata.index]}"
+                                                                         rendered="#{not auctionController.auctionDoesNotExist
+                                                                         and not auctionController.wrongParameterInLink
+                                                                         and not auctionController.wrongAuctionOwner}"
                                                                          styleClass="browser-default custom-select"
                                                                          style="width: 150px; height: 35px">
                                                             <f:selectItem itemValue="" itemLabel="--Select a parameter--" itemDisabled="true"/>
@@ -133,6 +150,9 @@
                                                         <h:inputText value="#{parameterValue}"
                                                                      id="parameterValueField"
                                                                      a:placeholder="#{parameterValue}"
+                                                                     rendered="#{not auctionController.auctionDoesNotExist
+                                                                     and not auctionController.wrongParameterInLink
+                                                                     and not auctionController.wrongAuctionOwner}"
                                                                      styleClass="form-control item-centered"
                                                                      style="width: 150px; height: 35px; background-color: white; color: black"/>
                                                     </div>
@@ -146,8 +166,14 @@
                                                 <table style="width: 100%; margin-left: 80px; text-align: justify">
                                                     <tr align="center">
                                                         <td></td>
-                                                        <td><b><h:outputText value="Photos"/></b><br />
-                                                            <h:outputText value="supported types: png, jpg, jpeg"/><br />
+                                                        <td><b><h:outputText value="Photos"
+                                                                             rendered="#{not auctionController.auctionDoesNotExist
+                                                                             and not auctionController.wrongParameterInLink
+                                                                             and not auctionController.wrongAuctionOwner}"/></b><br />
+                                                            <h:outputText value="supported types: png, jpg, jpeg"
+                                                                          rendered="#{not auctionController.auctionDoesNotExist
+                                                                          and not auctionController.wrongParameterInLink
+                                                                          and not auctionController.wrongAuctionOwner}"/><br />
                                                             <h:outputText value="#{msg['jaz.allezon.validator.auction.wrongFileFormat']}"
                                                                           rendered="#{auctionController.wrongFileFormat}"/>
                                                         </td>
@@ -157,27 +183,42 @@
                                                     <tr>
                                                         <td>
                                                             <h:outputText value="This one will be your miniature"
+                                                                          rendered="#{not auctionController.auctionDoesNotExist
+                                                                          and not auctionController.wrongParameterInLink
+                                                                          and not auctionController.wrongAuctionOwner}"
                                                                           style="margin-right: 20px"/><br />
                                                             <h:inputFile value="#{auctionController.auctionRequest.photos[0]}"
                                                                          id="photos1Field"
+                                                                         rendered="#{not auctionController.auctionDoesNotExist
+                                                                         and not auctionController.wrongParameterInLink
+                                                                         and not auctionController.wrongAuctionOwner}"
                                                                          styleClass="form-control-file"
                                                                          style="width: 276px"/>
                                                         </td>
                                                         <td>
                                                             <h:inputFile value="#{auctionController.auctionRequest.photos[1]}"
                                                                          id="photos2Field"
+                                                                         rendered="#{not auctionController.auctionDoesNotExist
+                                                                         and not auctionController.wrongParameterInLink
+                                                                         and not auctionController.wrongAuctionOwner}"
                                                                          styleClass="form-control-file"
                                                                          style="width: 276px"/>
                                                         </td>
                                                         <td>
                                                             <h:inputFile value="#{auctionController.auctionRequest.photos[2]}"
                                                                          id="photos3Field"
+                                                                         rendered="#{not auctionController.auctionDoesNotExist
+                                                                         and not auctionController.wrongParameterInLink
+                                                                         and not auctionController.wrongAuctionOwner}"
                                                                          styleClass="form-control-file"
                                                                          style="width: 276px"/>
                                                         </td>
                                                         <td>
                                                             <h:inputFile value="#{auctionController.auctionRequest.photos[3]}"
                                                                          id="photos4Field"
+                                                                         rendered="#{not auctionController.auctionDoesNotExist
+                                                                         and not auctionController.wrongParameterInLink
+                                                                         and not auctionController.wrongAuctionOwner}"
                                                                          styleClass="form-control-file"
                                                                          style="width: 276px"/>
                                                         </td>
@@ -188,6 +229,9 @@
                                                                <h:graphicImage
                                                                        value="/image?img=#{photo.getFilePath()}"
                                                                        alt="No photos"
+                                                                       rendered="#{not auctionController.auctionDoesNotExist
+                                                                       and not auctionController.wrongParameterInLink
+                                                                       and not auctionController.wrongAuctionOwner}"
                                                                        style="width: 300px; height: 210px; border: 1px solid black;"/>
                                                            </td>
                                                         </c:forEach>
