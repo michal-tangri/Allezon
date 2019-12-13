@@ -49,13 +49,13 @@
                                     <h:form>
 
                                         <h:selectOneMenu
-                                                value="#{auctionListController.auctionListRequest.categoryName}"
+                                                value="#{auctionListController.auctionListRequest.categoryId}"
                                                 styleClass="browser-default custom-select"
                                                 style="width: 270px; height: 46px">
 
                                             <c:forEach items="#{auctionListController.getAllCategories()}"
                                                        var="category" varStatus="metadata">
-                                                <f:selectItem itemValue="#{category.name}"
+                                                <f:selectItem itemValue="#{category.id}"
                                                               itemLabel="#{category.section.name} - #{category.name}"/>
                                             </c:forEach>
 
@@ -80,7 +80,7 @@
 
                                     <div class="list-group" style="margin-top: 15px; margin-left: 20%; text-align: left">
                                         <c:forEach
-                                                items="#{auctionListController.getAllAuctionsByCategory(auctionListController.auctionListRequest.categoryName)}"
+                                                items="#{auctionListController.getAllAuctionsByCategoryId(auctionListController.auctionListRequest.categoryId)}"
                                                 var="auction">
 
                                             <h:link outcome="auction.xhtml"
@@ -110,7 +110,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td style="width: 100%"></td>
-                                                            <td><i><h:outputText value="#{auction.category.name}"/></i></td>
+                                                            <td><i><h:outputText value="#{auction.category.section.name}/#{auction.category.name}"/></i></td>
                                                         </tr>
                                                     </table>
                                                 </div>

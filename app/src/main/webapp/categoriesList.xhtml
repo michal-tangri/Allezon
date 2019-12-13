@@ -96,7 +96,7 @@
                                 <div align="center">
 
                                     <div class="list-group" style="margin-top: 15px; margin-left: 20%;" align="center">
-                                        <c:forEach items="#{categoryListController.getAllCategoriesBySection(categoryListController.categoryListRequest.sectionName)}"
+                                        <c:forEach items="#{categoryListController.getAllCategoriesBySectionName(categoryListController.categoryListRequest.sectionName)}"
                                                    var="category">
                                             <h:link value="#{category.section.name} - #{category.name}"
                                                     outcome="categories"
