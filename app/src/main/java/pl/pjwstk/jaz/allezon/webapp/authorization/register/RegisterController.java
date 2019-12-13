@@ -12,13 +12,13 @@ import javax.inject.Named;
 public class RegisterController {
 
     @Inject
-    private RegisterRequest registerRequest;
-
-    @Inject
     private ProfileRepository profileRepository;
 
     @Inject
     private AllezonUtils utils;
+
+    @Inject
+    private RegisterRequest registerRequest;
 
     private boolean passwordsDoNotMatch = false;
     private boolean usernameAlreadyInDatabase = false;
@@ -36,6 +36,7 @@ public class RegisterController {
             usernameAlreadyInDatabase = true;
     }
 
+    //Getters and setters
     public boolean isPasswordsDoNotMatch() {
         return passwordsDoNotMatch;
     }

@@ -1,4 +1,4 @@
-package pl.pjwstk.jaz.allezon.webapp.filters;
+package pl.pjwstk.jaz.allezon.webapp.authorization.filters;
 
 import pl.pjwstk.jaz.allezon.webapp.authorization.session.CurrentSession;
 
@@ -24,7 +24,7 @@ public class LoginFilter extends HttpFilter {
         String contextPath = req.getContextPath();
         String currentPath = contextPath + req.getServletPath();
 
-        //Pages that does not require being logged in
+        //Pages that do not require being logged in
         boolean userOnWelcomePage = currentPath.contains("/welcome.xhtml");
         boolean userOnLoginPage = currentPath.contains("/login.xhtml");
         boolean userOnRegisterPage = currentPath.contains("/register.xhtml");

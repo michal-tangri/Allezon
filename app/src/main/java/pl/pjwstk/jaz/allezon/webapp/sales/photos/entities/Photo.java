@@ -27,6 +27,11 @@ public class Photo {
         this.auction = auction;
     }
 
+    //Getters and setters
+    public Long getId() {
+        return id;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -37,5 +42,13 @@ public class Photo {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public Auction getAuction() {
+        return auction;
+    }
+
+    public void setAuction(Auction auction) {
+        this.auction = auction;
     }
 }

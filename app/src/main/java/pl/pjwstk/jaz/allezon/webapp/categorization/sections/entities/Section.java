@@ -17,10 +17,6 @@ public class Section {
     public Section() {
     }
 
-    public Section(String name) {
-        this.name = name;
-    }
-
     public Section(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -31,6 +27,7 @@ public class Section {
         this.name = section.getName();
     }
 
+    //Getters and setters
     public String getName() {
         return name;
     }

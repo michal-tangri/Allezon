@@ -19,7 +19,7 @@ public class AuctionParameter implements Serializable {
     @MapsId("parameterId")
     @JoinColumn(name = "parameter_id")
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private pl.pjwstk.jaz.allezon.webapp.sales.parameters.entities.Parameter parameter;
+    private Parameter parameter;
 
     @MapsId("auctionId")
     @JoinColumn(name = "auction_id")
@@ -32,7 +32,7 @@ public class AuctionParameter implements Serializable {
     public AuctionParameter() {
     }
 
-    public AuctionParameter(AuctionParameterId id, pl.pjwstk.jaz.allezon.webapp.sales.parameters.entities.Parameter parameter, Auction auction, String value) {
+    public AuctionParameter(AuctionParameterId id, Parameter parameter, Auction auction, String value) {
         this.id = id;
         this.parameter = parameter;
         this.auction = auction;
@@ -40,6 +40,24 @@ public class AuctionParameter implements Serializable {
     }
 
     //Getters and setters
+    public void setAuction(Auction auction) {
+        this.auction = auction;
+        this.id.setAuctionId(auction.getId());
+    }
+
+    public Auction getAuction() {
+        return auction;
+    }
+
+    public void setParameter(Parameter parameter) {
+        this.parameter = parameter;
+        this.id.setParameterId(parameter.getId());
+    }
+
+    public Parameter getParameter() {
+        return parameter;
+    }
+
     public AuctionParameterId getId() {
         return id;
     }
@@ -54,23 +72,5 @@ public class AuctionParameter implements Serializable {
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    public pl.pjwstk.jaz.allezon.webapp.sales.parameters.entities.Parameter getParameter() {
-        return parameter;
-    }
-
-    public void setParameter(Parameter parameter) {
-        this.parameter = parameter;
-        this.id.setParameterId(parameter.getId());
-    }
-
-    public Auction getAuction() {
-        return auction;
-    }
-
-    public void setAuction(Auction auction) {
-        this.auction = auction;
-        this.id.setAuctionId(auction.getId());
     }
 }

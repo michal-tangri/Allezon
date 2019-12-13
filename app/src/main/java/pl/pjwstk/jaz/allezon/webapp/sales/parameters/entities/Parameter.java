@@ -20,10 +20,7 @@ public class Parameter {
             orphanRemoval = true)
     private List<AuctionParameter> parameters;
 
-    public Parameter() {}
-
-    public Parameter(String name) {
-        this.name = name;
+    public Parameter() {
     }
 
     //Getters and setters

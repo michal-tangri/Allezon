@@ -56,17 +56,4 @@ public class CategoryRepository {
         return entityManager.createQuery("from Category where section.name = :name order by name", Category.class)
                 .setParameter("name", name).getResultList();
     }
-
-//    @Transactional
-//    public Section findSectionByName(String name) {
-//        String query = "select NEW Section(c.section) FROM Category AS c WHERE c.section.name = :name GROUP BY c.section.name, c.section.id";
-//        var results =  entityManager.createQuery(query, Section.class)
-//                .setParameter("name", name);
-//
-//        if(!results.getResultList().isEmpty())
-//            return results.getSingleResult();
-//        else
-//            return null;
-//    }
-
 }

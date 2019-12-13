@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Category {
 
     @Id
-    @SequenceGenerator(name="categoryGenerator", sequenceName="category_id_seq", allocationSize=1)
+    @SequenceGenerator(name = "categoryGenerator", sequenceName = "category_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categoryGenerator")
     private Long id;
 
@@ -21,17 +21,11 @@ public class Category {
     private Section section;
 
     public Category() {
-
     }
 
     public Category(Long id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public Category(String name, Section section) {
-        this.name = name;
-        this.section = section;
     }
 
     public Category(Long id, String name, Section section) {

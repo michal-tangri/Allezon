@@ -42,21 +42,4 @@ public class AuctionRepository {
         return entityManager.createQuery("from Auction where profile.username = :username", Auction.class)
                 .setParameter("username", username).getResultList();
     }
-
-    @Transactional
-    public Category findCategoryByName(String name) {
-        return entityManager.createQuery("from Category where name = :name", Category.class)
-                .setParameter("name", name).getSingleResult();
-    }
-
-    @Transactional
-    public List<Category> findAllCategories() {
-        return entityManager.createQuery("from Category ORDER BY section.name, name", Category.class).getResultList();
-    }
-
-    @Transactional
-    public ProfileEntity findUserByName(String username) {
-        return entityManager.find(ProfileEntity.class, username);
-    }
-
 }

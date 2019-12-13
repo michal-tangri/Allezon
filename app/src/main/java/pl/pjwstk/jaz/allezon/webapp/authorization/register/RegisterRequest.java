@@ -23,10 +23,6 @@ public class RegisterRequest {
         return new ProfileEntity(username, name, surname, hashedPassword, emailAddress, dateOfBirth, false);
     }
 
-    public boolean doPasswordsMatch() {
-        return password.equals(passwordRepeated);
-    }
-
     @Override
     public String toString() {
         return "RegisterRequest{" +
@@ -38,6 +34,11 @@ public class RegisterRequest {
                 '}';
     }
 
+    public boolean doPasswordsMatch() {
+        return password.equals(passwordRepeated);
+    }
+
+    //Getters and setters
     public String getUsername() {
         return username;
     }

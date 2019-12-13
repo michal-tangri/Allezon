@@ -27,5 +27,4 @@ public class ImageServlet extends HttpServlet {
         resp.setHeader("Content-Length", String.valueOf(image.length()));
         Files.copy(image.toPath(), resp.getOutputStream());
     }
-
 }

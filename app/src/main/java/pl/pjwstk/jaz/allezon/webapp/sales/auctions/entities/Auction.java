@@ -59,16 +59,6 @@ public class Auction {
         this.price = price;
     }
 
-    public String getMiniaturePath() {
-        try {
-            Photo miniature = photos.get(0);
-            return miniature.getFilePath();
-        }
-        catch (IndexOutOfBoundsException err0) {
-            return null;
-        }
-    }
-
     //Getters and setters
     public Long getId() {
         return id;

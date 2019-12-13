@@ -1,5 +1,6 @@
 package pl.pjwstk.jaz.allezon.webapp.authorization.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -7,18 +8,29 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "profile")
 public class ProfileEntity {
+
     @Id
     private String username;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "surname")
     private String surname;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "dateOfBirth")
     private String dateOfBirth;
+
+    @Column(name = "admin")
     private Boolean admin;
 
     public ProfileEntity() {
-
     }
 
     public ProfileEntity(String username, String name, String surname, String password, String email, String dateOfBirth, Boolean admin) {
@@ -31,6 +43,7 @@ public class ProfileEntity {
         this.admin = admin;
     }
 
+    //Getters and setters
     public String getName() {
         return name;
     }
@@ -82,5 +95,4 @@ public class ProfileEntity {
     public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
-
 }

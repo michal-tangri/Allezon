@@ -25,7 +25,6 @@ public class AuctionRequest {
             parametersValues.add("");
             parametersNames.add("");
         }
-
     }
 
     public AuctionRequest(Auction auction) {

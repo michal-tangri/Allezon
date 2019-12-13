@@ -25,14 +25,7 @@ public class CurrentSession implements Serializable {
         utils.redirectToPage("/welcome.xhtml");
     }
 
-    public boolean isAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
+    //Getters and setters
     public String getName() {
         return name;
     }
@@ -65,4 +58,11 @@ public class CurrentSession implements Serializable {
         this.logged = logged;
     }
 
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 }

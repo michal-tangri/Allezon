@@ -15,9 +15,6 @@ import org.mindrot.jbcrypt.BCrypt;
 public class LoginController {
 
     @Inject
-    private LoginRequest loginRequest;
-
-    @Inject
     private ProfileRepository profileRepository;
 
     @Inject
@@ -25,6 +22,9 @@ public class LoginController {
 
     @Inject
     private AllezonUtils utils;
+
+    @Inject
+    private LoginRequest loginRequest;
 
     private boolean loginUnsuccessful = false;
 
