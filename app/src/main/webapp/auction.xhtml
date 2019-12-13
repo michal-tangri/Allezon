@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<h:head>
+
+    <title>Allezon</title>
+    <h:outputStylesheet name="main.css" library="css"/>
+    <h:outputStylesheet name="bootstrap.css" library="css"/>
+    <h:outputStylesheet name="fontello.css" library="css"/>
+    <h:outputStylesheet name="html-background.css" library="css"/>
+
+</h:head>
+
+<h:body style="background-color: lightgray;">
+
+    <ui:include src="/templates/topbar.xhtml"/>
+
+    <div>
+
+        <div id="viewport">
+
+            <ui:include src="/templates/sidebar.xhtml"/>
+
+            <div id="content" style="margin-top: 81px; z-index: 1">
+                <div class="container-fluid" style="margin-top: 10px;">
+
+                    <div class="row">
+                        <div class="col-lg">
+                            <div>
+                                <div style="color: black; text-align: center">
+                                    <h4>Auction</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg">
+                            <div>
+                                <div align="center">
+
+                                    <ui:param name="auction" value="#{auctionListController.getAuctionById()}"/>
+
+                                    <div>
+                                        <c:forEach items="#{auctionListController.getAllPhotosByAuctionId(auction.id)}" var="photo">
+                                            <h:graphicImage
+                                                    value="/image?img=#{photo.getFilePath()}"
+                                                    alt="No photos"
+                                                    style="width: 300px; height: 210px; border: 1px solid black;"/>
+                                        </c:forEach>
+                                    </div>
+
+                                    <table style="width: 78.7%">
+                                        <tr>
+                                            <td style="width: 100%; line-break: anywhere">
+                                                <b><h:outputText value="#{auction.title}"
+                                                                 style="font-size: 36px"/></b>
+                                            </td>
+                                            <td style="vertical-align: top;">
+                                                <i><h:outputText value="Price:  $#{auction.price}"
+                                                                 rendered="#{not auctionListController.auctionDoesNotExist
+                                                                 and not auctionListController.auctionIdNotSpecified
+                                                                 and not auctionListController.wrongParameterInLink}"
+                                                                 style="font-size: 28px; margin-right: 40px"/></i>
+                                            </td>
+                                            <td style="vertical-align: top;">
+                                                <i><h:outputText value="Category: #{auction.category.name}"
+                                                                 rendered="#{not auctionListController.auctionDoesNotExist
+                                                                 and not auctionListController.auctionIdNotSpecified
+                                                                 and not auctionListController.wrongParameterInLink}"
+                                                                 style="font-size: 28px"/></i>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="width: 100%; line-break: anywhere">
+                                                <h:outputText value="#{auction.description}"
+                                                              style="font-size: 20px"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <br/>
+                                    <br/>
+                                    <br/>
+
+                                    <div class="list-group">
+                                        <table  style="width: 78.7%">
+
+                                            <c:forEach items="#{auction.parameters}" var="auctionparameter">
+                                                <tr>
+                                                    <td>
+                                                        <b><h:outputText value="#{auctionparameter.parameter.name}"
+                                                                         styleClass="list-group-item"
+                                                                         style="font-size: 14px"/></b>
+                                                    </td>
+                                                    <td>
+                                                        <h:outputText value="#{auctionparameter.value}"
+                                                                      styleClass="list-group-item"
+                                                                      style="font-size: 14px"/>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+
+                                        </table>
+                                    </div>
+
+                                    <h:outputText
+                                            value="#{msg['jaz.allezon.validator.auction.specificAuction.doesNotExist']}"
+                                            rendered="#{auctionListController.auctionDoesNotExist}"
+                                            style="font-size: 36px"/>
+
+                                    <h:outputText
+                                            value="#{msg['jaz.allezon.validator.auction.specificAuction.wrongParameter']}"
+                                            rendered="#{auctionListController.wrongParameterInLink}"
+                                            style="font-size: 36px"/>
+
+                                    <h:outputText
+                                            value="#{msg['jaz.allezon.validator.auction.specificAuction.idNotSpecified']}"
+                                            rendered="#{auctionListController.auctionIdNotSpecified}"
+                                            style="font-size: 36px"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg">
+                            <div>
+                                <div>
+                                    <ui:insert name="footer">
+                                        <ui:include src="/templates/footer.xhtml"/>
+                                    </ui:insert>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</h:body>
+
+</html>

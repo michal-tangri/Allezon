@@ -35,9 +35,17 @@ public class AuctionRequest {
         this.price = auction.getPrice().toString();
         this.categoryName = auction.getCategory() == null ? null : auction.getCategory().getName();
 
+        int iterations = 0;
+
         for(AuctionParameter p : auction.getParameters()) {
             parametersNames.add(p.getParameter().getName());
             parametersValues.add(p.getValue());
+            iterations++;
+        }
+
+        for(int i = iterations; i <  10 ; i++) {
+            parametersValues.add("");
+            parametersNames.add("");
         }
     }
 

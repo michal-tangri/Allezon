@@ -16,7 +16,7 @@ public class AuctionParameter implements Serializable {
 
     @MapsId("parameterId")
     @JoinColumn(name = "parameter_id")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Parameter parameter;
 
     @MapsId("auctionId")

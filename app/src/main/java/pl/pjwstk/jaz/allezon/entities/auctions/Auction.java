@@ -1,5 +1,7 @@
 package pl.pjwstk.jaz.allezon.entities.auctions;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import pl.pjwstk.jaz.allezon.auth.ProfileEntity;
 import pl.pjwstk.jaz.allezon.entities.sections.Category;
 
@@ -34,30 +36,35 @@ public class Auction {
     @OneToMany(
             mappedBy = "auction",
             cascade = {CascadeType.MERGE, CascadeType.REMOVE},
-            orphanRemoval = true,
-            fetch = FetchType.EAGER)
+            orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Photo> photos;
 
     @OneToMany(
             mappedBy = "auction",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<AuctionParameter> parameters;
 
     public Auction() {
     }
 
     public Auction(Long id, String title, String description, Double price) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.price = price;
     }
 
     public String getMiniaturePath() {
-        Photo miniature = photos.get(0);
-        if(miniature != null)
+        try {
+            Photo miniature = photos.get(0);
             return miniature.getFilePath();
-        return null;
+        }
+        catch (IndexOutOfBoundsException err0) {
+            return null;
+        }
     }
 
     //Getters and setters

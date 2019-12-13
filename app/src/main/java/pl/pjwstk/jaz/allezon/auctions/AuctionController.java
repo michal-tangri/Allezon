@@ -11,6 +11,7 @@ import javax.inject.Named;
 import javax.servlet.http.Part;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Named
 @RequestScoped
@@ -27,7 +28,6 @@ public class AuctionController {
 
     private AuctionRequest auctionRequest;
 
-    private boolean changingAuctionSuccessful = false;
     private boolean parametersRepeated = false;
     private boolean wrongFileFormat = false;
 
@@ -35,65 +35,127 @@ public class AuctionController {
     private boolean wrongAuctionOwner = false;
     private boolean wrongParameterInLink = false;
 
-    //TODO editAuction
-
     public void save() {
         Auction auction = auctionRequest.toAuction();
 
-        //Dodawanie kategorii i użytkownika
+        Long auctionId = auction.getId();
+
+        //Dodanie kategorii i użytkownika
         auction.setCategory(auctionRepository.findCategoryByName(auctionRequest.getCategoryName()));
         auction.setProfile(auctionRepository.findUserByName(session.getUsername()));
 
-        //Dodawanie parametrów
+        //Pobranie listy parametrów zaznaczonych przez użytkownika
         List<String> parametersNames = auctionRequest.getParametersNames();
-        List<AuctionParameter> parameters = new ArrayList<>();
+
+        //Lista na parametry, które już wystąpiły żeby sprawdzić czy się nie powtarzają
         List<String> parametersInQueue = new ArrayList<>();
 
-        for(int i = 0; i < parametersNames.size(); i++) {
+        List<AuctionParameter> parameters = new ArrayList<>();
+
+        for (int i = 0; i < parametersNames.size(); i++) {
             String parameterName = parametersNames.get(i);
             String parameterValue = auctionRequest.getParametersValues().get(i);
 
-            if(parameterValue.equals("")) continue;
+            //Jeżeli parametr nie ma wartości, to go nie dodawaj
+            if (parameterValue.equals("")) continue;
 
-            if(parametersInQueue.contains(parametersNames.get(i))) {
+            //Jeżeli parametr już raz wystąpił, to przerwij dodawanie
+            if (parametersInQueue.contains(parameterName)) {
                 parametersRepeated = true;
                 return;
             }
 
             Parameter parameter = auctionRepository.findParameterByName(parameterName);
-            parameters.add(new AuctionParameter(new AuctionParameterId(), parameter, auction, parameterValue));
-            parametersInQueue.add(parametersNames.get(i));
+
+            AuctionParameter auctionParameter = auctionRepository.findAuctionParameterById(parameter.getId(), auctionId);
+
+            //Jeżeli dodajemy nową aukcję do bazy lub nowy parametr do aukcji w bazie
+            if (auctionId == null || auctionParameter == null) {
+                parameters.add(new AuctionParameter(new AuctionParameterId(), parameter, auction, parameterValue));
+            }
+            else {
+                auctionParameter.setParameter(parameter);
+                auctionParameter.setValue(parameterValue);
+                parameters.add(auctionParameter);
+            }
+
+            parametersInQueue.add(parameterName);
         }
 
         auction.setParameters(parameters);
 
         //Dodawanie zdjęć
-        List<Photo> photos = new ArrayList<>();
+        List<Photo> photos;
         Part[] photosParts = auctionRequest.getPhotos();
+        String fileName = auctionRequest.getTitle() + session.getUsername();
 
-        for(Part file: photosParts) {
-            if(file == null) continue;
-            String fileName = auctionRequest.getTitle() + session.getUsername();
+        if(auctionId == null) {
+            photos = new ArrayList<>();
+            for (Part file : photosParts) {
+                if (file == null)
+                    continue;
 
-            try {
-                photos.add(new Photo(utils.saveImageToFile(file, fileName), auction));
-            }
-            catch (IllegalArgumentException err0) {
-                wrongFileFormat = true;
-                return;
+                try {
+                    photos.add(new Photo(utils.saveImageToFile(file, fileName), auction));
+                } catch (IllegalArgumentException err0) {
+                    wrongFileFormat = true;
+                    return;
+                }
             }
         }
+        else {
+            photos = auctionRepository.findAllPhotosByAuctionId(auctionId);
+            for(int i = 0; i < photosParts.length; i++) {
+                Part file = photosParts[i];
+                if (file == null)
+                    continue;
 
+                try {
+                    if(photos.size() < i+1)
+                        photos.add(new Photo(utils.saveImageToFile(file, fileName), auction));
+                    else
+                        photos.get(i).setFilePath(utils.saveImageToFile(file, fileName));
+                } catch (IllegalArgumentException err0) {
+                    wrongFileFormat = true;
+                    return;
+                }
+
+            }
+        }
         auction.setPhotos(photos);
+
 
         //Zapis do bazy
         auctionRepository.save(auction);
-        changingAuctionSuccessful = true;
+        if(auctionId == null)
+            utils.redirectToPage("/userAuctionsList.xhtml");
+        else
+            utils.redirectToPage("/auction.xhtml?auctionId=" + auctionId);
     }
 
     private AuctionRequest createAuctionRequest() {
-        if(utils.linkContains("auctionId")) {
+        if (utils.linkContains("auctionId")) {
+            var auctionId = utils.getLongFromLink("auctionId");
 
+            if (auctionId == null) {
+                wrongParameterInLink = true;
+                return new AuctionRequest();
+            }
+
+            var auction = new Auction();
+            try {
+                auction = auctionRepository.findAuctionById(auctionId).orElseThrow();
+            } catch (NoSuchElementException err0) {
+                auctionDoesNotExist = true;
+                return new AuctionRequest();
+            }
+
+            if (!auction.getProfile().getUsername().equals(session.getUsername())) {
+                wrongAuctionOwner = true;
+                return new AuctionRequest();
+            }
+
+            return new AuctionRequest(auction);
         }
         return new AuctionRequest();
     }
@@ -106,15 +168,18 @@ public class AuctionController {
         return auctionRepository.findAllCategories();
     }
 
-    //Getters and setters
-    public AuctionRequest getAuctionRequest() {
-        if(auctionRequest == null)
-            auctionRequest = createAuctionRequest();
-        return auctionRequest;
+    public List<Photo> getAllPhotosByAuctionId() {
+        var auctionId = utils.getLongFromLink("auctionId");
+        if(auctionId == null)
+            return null;
+        return auctionRepository.findAllPhotosByAuctionId(auctionId);
     }
 
-    public boolean isChangingAuctionSuccessful() {
-        return changingAuctionSuccessful;
+    //Getters and setters
+    public AuctionRequest getAuctionRequest() {
+        if (auctionRequest == null)
+            auctionRequest = createAuctionRequest();
+        return auctionRequest;
     }
 
     public boolean isWrongFileFormat() {

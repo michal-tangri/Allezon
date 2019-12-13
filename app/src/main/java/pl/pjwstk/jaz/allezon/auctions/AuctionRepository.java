@@ -1,8 +1,7 @@
 package pl.pjwstk.jaz.allezon.auctions;
 
 import pl.pjwstk.jaz.allezon.auth.ProfileEntity;
-import pl.pjwstk.jaz.allezon.entities.auctions.Auction;
-import pl.pjwstk.jaz.allezon.entities.auctions.Parameter;
+import pl.pjwstk.jaz.allezon.entities.auctions.*;
 import pl.pjwstk.jaz.allezon.entities.sections.Category;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,14 +10,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Named
 @ApplicationScoped
 public class AuctionRepository {
-
-    //TODO getAllAuctions
-    //TODO getUserAuctions
-    //TODO editAuction
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -29,9 +25,21 @@ public class AuctionRepository {
     }
 
     @Transactional
+    public Optional<Auction> findAuctionById(Long id) {
+        var auction = entityManager.find(Auction.class, id);
+        return Optional.ofNullable(auction);
+    }
+
+    @Transactional
     public List<Auction> findAllAuctionsByCategory(String name) {
         return entityManager.createQuery("from Auction where category.name = :name", Auction.class)
                 .setParameter("name", name).getResultList();
+    }
+
+    @Transactional
+    public List<Auction> findAllAuctionsByUsername(String username) {
+        return entityManager.createQuery("from Auction where profile.username = :username", Auction.class)
+                .setParameter("username", username).getResultList();
     }
 
     @Transactional
@@ -56,6 +64,18 @@ public class AuctionRepository {
         return entityManager.createQuery("from Parameter order by name", Parameter.class)
                 .getResultList();
     }
+
+    @Transactional
+    public AuctionParameter findAuctionParameterById(Long parameterId, Long auctionId) {
+        return entityManager.find(AuctionParameter.class, new AuctionParameterId(parameterId, auctionId));
+    }
+
+    @Transactional
+    public List<Photo> findAllPhotosByAuctionId(Long auctionId) {
+        return entityManager.createQuery("from Photo where auction.id = :auctionId ORDER BY id", Photo.class)
+                .setParameter("auctionId", auctionId).getResultList();
+    }
+
 
     @Transactional
     public ProfileEntity findUserByName(String username) {

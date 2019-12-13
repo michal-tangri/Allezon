@@ -21,9 +21,9 @@ public class SectionController {
     private SectionRequest sectionRequest;
 
     private boolean sectionAlreadyExists = false;
-    private boolean changingSectionsSuccessful = false;
     private boolean sectionDoesNotExist = false;
     private boolean wrongParameterInLink = false;
+    private boolean changingSectionsSuccessful = false;
 
     public void save() {
         Section section = sectionRequest.toSection();

@@ -29,45 +29,13 @@
             <ui:include src="/templates/sidebar.xhtml"/>
 
             <div id="content" style="margin-top: 81px; z-index: 1">
-                <div class="container-fluid" style="margin-top: 10px;">
+                <div class="container-fluid" style="margin-top: 10px; z-index: 2">
 
                     <div class="row">
                         <div class="col-lg">
                             <div>
                                 <div style="color: black; text-align: center">
-                                    <h4>Auctions</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg">
-                            <div>
-                                <div align="center" style="margin-top: 10px">
-
-                                    <h:form>
-
-                                        <h:selectOneMenu
-                                                value="#{auctionListController.auctionListRequest.categoryName}"
-                                                styleClass="browser-default custom-select"
-                                                style="width: 270px; height: 46px">
-
-                                            <c:forEach items="#{auctionListController.getAllCategories()}"
-                                                       var="category" varStatus="metadata">
-                                                <f:selectItem itemValue="#{category.name}"
-                                                              itemLabel="#{category.section.name} - #{category.name}"/>
-                                            </c:forEach>
-
-                                        </h:selectOneMenu>
-
-                                        <h:commandButton value="Filter results"
-                                                         action="#{auctionListController.filter()}"
-                                                         styleClass="btn btn-primary"
-                                                         style="width: 270px; height: 44px"/>
-
-                                    </h:form>
-
+                                    <h4>Your auctions</h4>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +48,7 @@
 
                                     <div class="list-group" style="margin-top: 15px; margin-left: 20%; text-align: left">
                                         <c:forEach
-                                                items="#{auctionListController.getAllAuctionsByCategory(auctionListController.auctionListRequest.categoryName)}"
+                                                items="#{auctionListController.getAllAuctionsByUsername(currentSession.username)}"
                                                 var="auction">
 
                                             <h:link outcome="auction.xhtml"
@@ -111,6 +79,19 @@
                                                         <tr>
                                                             <td style="width: 100%"></td>
                                                             <td><i><h:outputText value="#{auction.category.name}"/></i></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 100%; text-align: center">
+                                                                <h:link value="Edytuj"
+                                                                        outcome="auctions"
+                                                                        styleClass="btn btn-primary"
+                                                                        style="width: 270px; height: 40px">
+                                                                    <f:param name="auctionId" value="#{auction.id}"/>
+
+                                                                    <i class="icon-pencil"/>
+
+                                                                </h:link>
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </div>

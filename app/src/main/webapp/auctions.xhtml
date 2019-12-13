@@ -27,7 +27,7 @@
 
             <ui:include src="/templates/sidebar.xhtml"/>
 
-            <div id="content">
+            <div id="content" style="margin-top: 81px; z-index: 1">
                 <div class="container-fluid" style="margin-top: 10px;">
 
                     <!-- Napis nad formularzem aukcji -->
@@ -52,10 +52,10 @@
                                             <div class="col-lg">
                                                 <div align="center">
 
-                                                    <b><h:outputText value="#{msg['jaz.allezon.validator.auction.successful']}"
-                                                                  rendered="#{auctionController.changingAuctionSuccessful}"/></b>
-
                                                     <h:message for="titleField"/>
+
+                                                    <!-- ID -->
+                                                    <h:inputHidden value="#{auctionController.auctionRequest.id}"/>
                                                     <!-- Tytuł -->
                                                     <h:inputText value="#{auctionController.auctionRequest.title}"
                                                                  id="titleField"
@@ -100,35 +100,6 @@
                                                     </h:inputText>
 
                                                     <!-- Zdjęcia -->
-                                                    <b><h:outputText value="Photos"/></b><br />
-                                                    <h:outputText value="supported types: png, jpg, jpeg"/><br />
-
-                                                    <h:outputText value="#{msg['jaz.allezon.validator.auction.wrongFileFormat']}"
-                                                                  rendered="#{auctionController.wrongFileFormat}"/>
-
-                                                    <h:message for="photos1Field"/>
-                                                    <h:inputFile value="#{auctionController.auctionRequest.photos[0]}"
-                                                                 id="photos1Field"
-                                                                 styleClass="form-control-file"
-                                                                 style="width: 276px"/>
-
-                                                    <h:message for="photos2Field"/>
-                                                    <h:inputFile value="#{auctionController.auctionRequest.photos[1]}"
-                                                                 id="photos2Field"
-                                                                 styleClass="form-control-file"
-                                                                 style="width: 276px"/>
-
-                                                    <h:message for="photos3Field"/>
-                                                    <h:inputFile value="#{auctionController.auctionRequest.photos[2]}"
-                                                                 id="photos3Field"
-                                                                 styleClass="form-control-file"
-                                                                 style="width: 276px"/>
-
-                                                    <h:message for="photos4Field"/>
-                                                    <h:inputFile value="#{auctionController.auctionRequest.photos[3]}"
-                                                                 id="photos4Field"
-                                                                 styleClass="form-control-file"
-                                                                 style="width: 276px"/>
 
                                                     <!-- Przycisk dodawania aukcji -->
                                                     <h:commandButton value="Submit"
@@ -150,7 +121,7 @@
                                                     <div class="input-group">
                                                         <h:selectOneMenu value="#{auctionController.auctionRequest.parametersNames[metadata.index]}"
                                                                          styleClass="browser-default custom-select"
-                                                                         style="width: 150px; height: 50px">
+                                                                         style="width: 150px; height: 35px">
                                                             <f:selectItem itemValue="" itemLabel="--Select a parameter--" itemDisabled="true"/>
                                                             <c:forEach items="#{parametersList}" var="parameter" varStatus="metadata">
                                                                 <f:selectItem itemValue="#{parameter.name}" itemLabel="#{parameter.name}" />
@@ -163,20 +134,79 @@
                                                                      id="parameterValueField"
                                                                      a:placeholder="#{parameterValue}"
                                                                      styleClass="form-control item-centered"
-                                                                     style="width: 150px; height: 50px; background-color: white; color: black"/>
+                                                                     style="width: 150px; height: 35px; background-color: white; color: black"/>
                                                     </div>
                                                     <br />
                                                 </c:forEach>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-lg">
+                                                <table style="width: 100%; margin-left: 80px; text-align: justify">
+                                                    <tr align="center">
+                                                        <td></td>
+                                                        <td><b><h:outputText value="Photos"/></b><br />
+                                                            <h:outputText value="supported types: png, jpg, jpeg"/><br />
+                                                            <h:outputText value="#{msg['jaz.allezon.validator.auction.wrongFileFormat']}"
+                                                                          rendered="#{auctionController.wrongFileFormat}"/>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <h:outputText value="This one will be your miniature"
+                                                                          style="margin-right: 20px"/><br />
+                                                            <h:inputFile value="#{auctionController.auctionRequest.photos[0]}"
+                                                                         id="photos1Field"
+                                                                         styleClass="form-control-file"
+                                                                         style="width: 276px"/>
+                                                        </td>
+                                                        <td>
+                                                            <h:inputFile value="#{auctionController.auctionRequest.photos[1]}"
+                                                                         id="photos2Field"
+                                                                         styleClass="form-control-file"
+                                                                         style="width: 276px"/>
+                                                        </td>
+                                                        <td>
+                                                            <h:inputFile value="#{auctionController.auctionRequest.photos[2]}"
+                                                                         id="photos3Field"
+                                                                         styleClass="form-control-file"
+                                                                         style="width: 276px"/>
+                                                        </td>
+                                                        <td>
+                                                            <h:inputFile value="#{auctionController.auctionRequest.photos[3]}"
+                                                                         id="photos4Field"
+                                                                         styleClass="form-control-file"
+                                                                         style="width: 276px"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <c:forEach items="#{auctionController.getAllPhotosByAuctionId()}" var="photo">
+                                                           <td>
+                                                               <h:graphicImage
+                                                                       value="/image?img=#{photo.getFilePath()}"
+                                                                       alt="No photos"
+                                                                       style="width: 300px; height: 210px; border: 1px solid black;"/>
+                                                           </td>
+                                                        </c:forEach>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </h:form>
 
                                     <h:outputText value="#{msg['jaz.allezon.validator.auction.doesNotExist']}"
-                                                  rendered="#{sectionController.sectionDoesNotExist}"
+                                                  rendered="#{auctionController.auctionDoesNotExist}"
                                                   style="font-size: 36px"/>
 
                                     <h:outputText value="#{msg['jaz.allezon.validator.auction.wrongParameter']}"
-                                                  rendered="#{sectionController.wrongParameterInLink}"
+                                                  rendered="#{auctionController.wrongParameterInLink}"
+                                                  style="font-size: 36px"/>
+
+                                    <h:outputText value="#{msg['jaz.allezon.validator.auction.wrongOwner']}"
+                                                  rendered="#{auctionController.wrongAuctionOwner}"
                                                   style="font-size: 36px"/>
 
                                 </div>

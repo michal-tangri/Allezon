@@ -56,7 +56,7 @@ public class AllezonUtils {
         if(!originalFileName.endsWith(".png") && !originalFileName.endsWith(".jpg") && !originalFileName.endsWith(".jpeg"))
             throw new IllegalArgumentException();
 
-        String fileName = (newFileName + System.nanoTime() + originalFileName)
+        String fileName = (System.nanoTime() + newFileName + originalFileName)
                 .replaceAll("\\s","");
 
         try (InputStream input = file.getInputStream()) {
