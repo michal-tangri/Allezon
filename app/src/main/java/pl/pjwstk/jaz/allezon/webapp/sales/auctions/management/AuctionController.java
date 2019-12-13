@@ -114,8 +114,11 @@ public class AuctionController {
                 try {
                     if(photos.size() < i+1)
                         photos.add(new Photo(utils.saveImageToFile(file, fileName), auction));
-                    else
-                        photos.get(i).setFilePath(utils.saveImageToFile(file, fileName));
+                    else {
+                        Photo photo = photos.get(i);
+                        utils.removeImageFromDisk(photo.getFilePath());
+                        photo.setFilePath(utils.saveImageToFile(file, fileName));
+                    }
                 } catch (IllegalArgumentException err0) {
                     wrongFileFormat = true;
                     return;

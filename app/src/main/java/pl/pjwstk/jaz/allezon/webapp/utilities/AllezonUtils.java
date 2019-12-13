@@ -62,6 +62,14 @@ public class AllezonUtils {
         return fileName;
     }
 
+    public void removeImageFromDisk(String imageName) {
+        try {
+            Files.delete(new File(PHOTOS_DIRECTORY_PATH + "/" + imageName).toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     //Getters and setters
     public static String getPhotosDirectoryPath() {
         return PHOTOS_DIRECTORY_PATH;
