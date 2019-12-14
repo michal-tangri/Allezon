@@ -64,36 +64,47 @@
                                                 </div>
 
                                                 <div style="margin-left: 210px">
-                                                    <table>
-                                                        <tr>
-                                                            <td>Title</td>
-                                                            <td>Price</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 100%; line-break: anywhere"><b><h:outputText value="#{auction.title}"/></b></td>
-                                                            <td valign="top"><b><h:outputText value="$#{auction.price}"/></b></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 100%"></td>
-                                                            <td><i><h:outputText value="#{auction.category.section.name}/#{auction.category.name}"/></i></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 100%; text-align: center">
-                                                                <h:link value="Edytuj"
-                                                                        outcome="auctions"
-                                                                        styleClass="btn btn-primary"
-                                                                        style="width: 270px; height: 40px">
-                                                                    <f:param name="auctionId" value="#{auction.id}"/>
 
-                                                                    <i class="icon-pencil"/>
+                                                    <div style="display: inline">
+                                                        <table style="max-width: 400px; display: inline">
+                                                            <tr>
+                                                                <td>Title</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="line-break: anywhere; max-width: 400px"><b><h:outputText value="#{auction.title}"/></b></td>
+                                                            </tr>
+                                                        </table>
 
-                                                                </h:link>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                        <table style="float: right;">
+                                                            <tr>
+                                                                <td></td>
+                                                                <td valign="top" align="right"><b>Price: <h:outputText value="$#{auction.price}"/></b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td valign="top" align="right">Category</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td align="right"><i><h:outputText value="#{auction.category.section.name}/#{auction.category.name}"/></i></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td valign="top" align="right">
+                                                                    <h:link value="Edytuj"
+                                                                            outcome="auctions"
+                                                                            styleClass="btn btn-primary"
+                                                                            style="width: 150px; height: 40px">
+                                                                        <f:param name="auctionId" value="#{auction.id}"/>
+
+                                                                        <i class="icon-pencil"/>
+
+                                                                    </h:link>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
                                                 </div>
 
                                             </h:link>

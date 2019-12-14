@@ -118,8 +118,6 @@
                                                         <f:validateRegex pattern="^\d+(\.\d{1,2}|\,\d{1,2})?+$"/>
                                                     </h:inputText>
 
-                                                    <!-- Zdjęcia -->
-
                                                     <!-- Przycisk dodawania aukcji -->
                                                     <h:commandButton value="Submit"
                                                                      action="#{auctionController.save}"
@@ -175,6 +173,7 @@
                                             </div>
                                         </div>
 
+                                        <!-- Zdjęcia -->
                                         <div class="row">
                                             <div class="col-lg">
                                                 <table style="width: 100%; margin-left: 80px; text-align: justify">
@@ -255,7 +254,7 @@
                                                            <td>
                                                                <h:graphicImage
                                                                        value="/image?img=#{photo.getFilePath()}"
-                                                                       alt="No photos"
+                                                                       alt="No photo"
 
                                                                        rendered="#{not auctionController.auctionDoesNotExist
                                                                        and not auctionController.wrongParameterInLink
