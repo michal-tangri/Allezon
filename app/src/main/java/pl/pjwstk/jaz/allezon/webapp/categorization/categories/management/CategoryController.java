@@ -24,7 +24,6 @@ public class CategoryController {
     private CategoryRequest categoryRequest;
 
     private boolean categoryAlreadyExists = false;
-    private boolean changingCategorySuccessful = false;
     private boolean categoryDoesNotExist = false;
     private boolean wrongParameterInLink = false;
 
@@ -33,7 +32,7 @@ public class CategoryController {
         category.setSection(categoryManagerService.getSectionByName(categoryRequest.getSectionName()));
         try {
             categoryManagerService.saveCategory(category);
-            changingCategorySuccessful = true;
+            utils.redirectToPage("/categoriesList.xhtml");
         }
         catch (Exception err0) {
             categoryAlreadyExists = true;
@@ -74,10 +73,6 @@ public class CategoryController {
 
     public boolean isCategoryAlreadyExists() {
         return categoryAlreadyExists;
-    }
-
-    public boolean isChangingCategorySuccessful() {
-        return changingCategorySuccessful;
     }
 
     public boolean isCategoryDoesNotExist() {

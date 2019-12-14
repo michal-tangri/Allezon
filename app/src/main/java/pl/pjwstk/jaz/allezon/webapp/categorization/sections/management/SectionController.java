@@ -24,13 +24,13 @@ public class SectionController {
     private boolean sectionAlreadyExists = false;
     private boolean sectionDoesNotExist = false;
     private boolean wrongParameterInLink = false;
-    private boolean changingSectionsSuccessful = false;
 
     public void save() {
         Section section = sectionRequest.toSection();
         try {
             sectionRepository.save(section);
-            changingSectionsSuccessful = true;
+            utils.redirectToPage("/sectionsList.xhtml");
+
         }
         catch (Exception err0) {
             sectionAlreadyExists = true;
@@ -63,10 +63,6 @@ public class SectionController {
         if(sectionRequest == null)
             sectionRequest = createSectionRequest();
         return sectionRequest;
-    }
-
-    public boolean isChangingSectionsSuccessful() {
-        return changingSectionsSuccessful;
     }
 
     public boolean isWrongParameterInLink() {
