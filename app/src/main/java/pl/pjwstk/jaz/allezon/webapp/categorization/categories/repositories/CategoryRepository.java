@@ -19,31 +19,22 @@ public class CategoryRepository {
 
     @Transactional
     public void save(Category category) throws Exception {
-        if(findCategoryInSectionByName(category.getName(), category.getSection().getName()) == null) {
-            if(category.getId() == null)
-                entityManager.persist(category);
-            else
-                entityManager.merge(category);
+        String categoryName = category.getName().toLowerCase().replace("\\s", "");
+        for (Category c : findAllCategoriesBySectionName(category.getSection().getName())) {
+            if (c.getName().toLowerCase().replace("\\s", "").equals(categoryName))
+                throw new Exception();
         }
+
+        if (category.getId() == null)
+            entityManager.persist(category);
         else
-            throw new Exception();
+            entityManager.merge(category);
     }
 
     @Transactional
     public Optional<Category> findCategoryById(Long id) {
         var category = entityManager.find(Category.class, id);
         return Optional.ofNullable(category);
-    }
-
-    @Transactional
-    public Category findCategoryInSectionByName(String name, String sectionName) {
-        var results = entityManager.createQuery("from Category where name = :name AND section.name = :sectionName", Category.class)
-                .setParameter("name", name).setParameter("sectionName", sectionName);
-
-        if(!results.getResultList().isEmpty())
-            return results.getSingleResult();
-        else
-            return null;
     }
 
     @Transactional
