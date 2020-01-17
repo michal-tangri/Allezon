@@ -119,6 +119,18 @@
                                                                 <td></td>
                                                                 <td align="right"><i><h:outputText value="#{auction.category.section.name}/#{auction.category.name}"/></i></td>
                                                             </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td valign="top" align="right">
+                                                                    <h:link value="Add to cart"
+                                                                            outcome="auctions"
+                                                                            styleClass="btn btn-primary"
+                                                                            style="width: 170px; height: 40px">
+                                                                        <f:param name="auctionId" value="#{auction.id}"/>
+
+                                                                    </h:link>
+                                                                </td>
+                                                            </tr>
                                                         </table>
                                                     </div>
                                                 </div>

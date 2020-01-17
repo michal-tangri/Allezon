@@ -30,7 +30,7 @@ body {
 /* Sidebar Styles */
 
 #sidebar {
-    z-index: 1000;
+    z-index: 3;
     position: fixed;
     left: 250px;
     width: 300px;

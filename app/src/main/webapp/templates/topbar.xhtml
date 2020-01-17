@@ -3,12 +3,14 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
 
 <body>
 
 <ui:composition>
+
+    <h:outputStylesheet name="popup.css" library="css"/>
 
     <!-- Topbar -->
     <div class="container-fluid" style="width: 100%; padding-left: 0; padding-right: 0;">
@@ -22,10 +24,24 @@
                         </h:link>
 
                         <div align="right" style="margin-top: -50px">
+
                             <h:form>
+
+                                <h:commandButton value="Cart"
+                                                 styleClass="btn btn-primary" action="null"
+                                                 onclick="showCart()"
+                                                 rendered="#{currentSession.logged}"
+                                                 style="width: 120px; height: 36px;
+                                             margin-left: 10px; margin-bottom: 10px;
+                                             margin-right: 20px; margin-top: -14px;
+                                             text-align: center;">
+                                    <f:ajax render="@none" event="click" />
+                                </h:commandButton>
+
                                 <h:commandButton value="Logout"
                                                  action="#{currentSession.closeSession}"
                                                  styleClass="btn btn-primary"
+                                                 id="logout"
                                                  rendered="#{currentSession.logged}"
                                                  style="width: 120px; height: 36px;
                                                         margin-left: 10px; margin-bottom: 10px;
@@ -58,7 +74,30 @@
         </div>
     </div>
 
+    <div id="cart-bg" class="popup-bg">
+        <div id="cart-content" class="popup-content">
+            <div class="close-button" onclick="hideCart()">+</div>
+
+
+
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function showCart() {
+            document.getElementById('cart-bg').style.visibility = 'visible';
+            document.getElementById('cart-content').style.visibility = 'visible';
+        }
+
+        function hideCart() {
+            document.getElementById('cart-bg').style.visibility = 'hidden';
+            document.getElementById('cart-content').style.visibility = 'hidden';
+        }
+    </script>
+
 </ui:composition>
+
+
 
 </body>
 
