@@ -26,6 +26,12 @@ public class Cart {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<CartProduct> products;
 
+    public Cart() {};
+
+    public Cart(String username) {
+        this.username = username;
+    }
+
     public Long getId() {
         return id;
     }

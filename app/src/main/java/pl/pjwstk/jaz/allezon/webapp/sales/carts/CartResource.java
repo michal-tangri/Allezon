@@ -27,9 +27,14 @@ public class CartResource {
     @Path("/{username}/add/{id}")
     public Response addItemToCart(@PathParam("username") final String username, @PathParam("id") final Long id,
                                   @QueryParam("amount") String amountString) {
+
         Cart cart = cartManagerService.getCartByUsername(username);
-        Long amount = Long.parseLong(amountString);
+        Long amount = amountString == null ? 1L : Long.parseLong(amountString);
+
         CartProduct product = new CartProduct(LocalDate.now(), cartManagerService.getAuctionById(id), cart, amount);
+
+        if(product.getAuction() == null)
+            return Response.status(Status.NOT_FOUND).entity("Auction with this ID does not exist").build();
         cartManagerService.saveProduct(product);
         return Response.ok("Added " + amount +" products No: " + id + " to " + username + "'s cart").build();
     }
@@ -37,6 +42,8 @@ public class CartResource {
     @DELETE
     @Path("/{username}")
     public Response removeAllProductsInUsersCart(@PathParam("username") final String username) {
+        if(cartManagerService.getCartByUsername(username) == null)
+            return Response.status(Status.NOT_FOUND).entity("This user does not exist or does not have a cart!").build();
         cartManagerService.removeAllProductsInUsersCart(username);
         return Response.ok().entity("Deleted products from " + username + "'s cart").build();
     }

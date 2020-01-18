@@ -41,6 +41,13 @@ public class CartProduct {
         this.amount = amount;
     }
 
+    public CartProduct(LocalDate addedAt, Auction auction, Cart cart) {
+        this.addedAt = addedAt;
+        this.auction = auction;
+        this.cart = cart;
+        this.amount = 1L;
+    }
+
     //Getters and setters
     public Long getId() {
         return id;
