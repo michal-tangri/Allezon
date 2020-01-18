@@ -1,0 +1,1 @@
+ALTER TABLE cart_products ADD COLUMN amount int;

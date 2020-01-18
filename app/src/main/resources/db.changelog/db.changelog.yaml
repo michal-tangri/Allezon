@@ -41,3 +41,17 @@ databaseChangeLog:
         relativeToChangelogFile: true
         splitStatements: false
         path: categories_init.sql
+  - changeSet:
+      id: 20200117_init
+      author: Michał Tangri
+      sqlFile:
+        relativeToChangelogFile: true
+        splitStatements: false
+        path: 20200117_init.sql
+  - changeSet:
+      id: 20200118_init
+      author: Michał Tangri
+      sqlFile:
+        relativeToChangelogFile: true
+        splitStatements: false
+        path: 20200118_init.sql
