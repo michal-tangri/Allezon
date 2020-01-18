@@ -41,11 +41,14 @@ public class LoginFilter extends HttpFilter {
         //Resources
         boolean isResource = req.getRequestURI().startsWith(req.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/");
 
+        //APIs
+        boolean isAPI = currentPath.contains("/api");
+
         //Main logic
         boolean userAdmin = currentSession.isAdmin();
         boolean userLogged = currentSession.isLogged();
 
-        if(isResource) {
+        if(isResource || isAPI) {
             chain.doFilter(req, res);
         }
         else if(userLogged) {
