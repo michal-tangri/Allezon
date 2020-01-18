@@ -26,6 +26,10 @@ dependencies {
     implementation 'org.liquibase:liquibase-core:3.8.0'
     implementation 'org.liquibase:liquibase-cdi:3.8.0'
 
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.9.0'
+    implementation 'org.jboss.resteasy:resteasy-client:4.4.1.Final'
+    implementation 'org.jboss.resteasy:resteasy-servlet-initializer:4.4.1.Final'
+
     compile group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'
