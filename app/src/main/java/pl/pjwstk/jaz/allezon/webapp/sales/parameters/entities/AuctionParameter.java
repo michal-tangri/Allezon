@@ -1,5 +1,6 @@
 package pl.pjwstk.jaz.allezon.webapp.sales.parameters.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import pl.pjwstk.jaz.allezon.webapp.sales.auctions.entities.Auction;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class AuctionParameter implements Serializable {
     @MapsId("auctionId")
     @JoinColumn(name = "auction_id")
     @ManyToOne
+    @JsonBackReference
     private Auction auction;
 
     @Column(name = "value")
