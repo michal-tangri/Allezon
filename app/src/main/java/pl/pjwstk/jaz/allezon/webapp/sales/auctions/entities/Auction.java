@@ -1,5 +1,6 @@
 package pl.pjwstk.jaz.allezon.webapp.sales.auctions.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import pl.pjwstk.jaz.allezon.webapp.authorization.entities.ProfileEntity;
@@ -47,6 +48,7 @@ public class Auction {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonBackReference
     private List<AuctionParameter> parameters;
 
     public Auction() {
