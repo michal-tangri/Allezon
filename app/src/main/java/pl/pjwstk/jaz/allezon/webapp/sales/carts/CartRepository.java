@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
@@ -24,7 +25,7 @@ public class CartRepository {
 
     @Transactional
     public void createCartForUser(String username) {
-        entityManager.persist(new Cart(username));
+        entityManager.persist(new Cart(username, LocalDate.now()));
     }
 
     @Transactional

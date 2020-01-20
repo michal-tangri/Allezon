@@ -5,7 +5,6 @@ import pl.pjwstk.jaz.allezon.webapp.sales.auctions.entities.Auction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "cart_products")
@@ -15,10 +14,6 @@ public class CartProduct {
     @NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "added_at")
-    @NotNull
-    private LocalDate addedAt;
 
     @Column(name = "amount")
     private Long amount;
@@ -34,18 +29,10 @@ public class CartProduct {
 
     public CartProduct() {}
 
-    public CartProduct(LocalDate addedAt, Auction auction, Cart cart, Long amount) {
-        this.addedAt = addedAt;
+    public CartProduct(Auction auction, Cart cart, Long amount) {
         this.auction = auction;
         this.cart = cart;
         this.amount = amount;
-    }
-
-    public CartProduct(LocalDate addedAt, Auction auction, Cart cart) {
-        this.addedAt = addedAt;
-        this.auction = auction;
-        this.cart = cart;
-        this.amount = 1L;
     }
 
     //Getters and setters
@@ -55,14 +42,6 @@ public class CartProduct {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDate getAddedAt() {
-        return addedAt;
-    }
-
-    public void setAddedAt(LocalDate addedAt) {
-        this.addedAt = addedAt;
     }
 
     public Auction getAuction() {

@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -17,6 +18,11 @@ public class Cart {
     private Long id;
 
     @NotNull
+    @Column(name = "created_at")
+    private LocalDate createdAt;
+
+    @NotNull
+    @Column(name = "username")
     private String username;
 
     @OneToMany(
@@ -28,8 +34,9 @@ public class Cart {
 
     public Cart() {};
 
-    public Cart(String username) {
+    public Cart(String username, LocalDate createdAt) {
         this.username = username;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -54,5 +61,13 @@ public class Cart {
 
     public void setProducts(List<CartProduct> products) {
         this.products = products;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 }

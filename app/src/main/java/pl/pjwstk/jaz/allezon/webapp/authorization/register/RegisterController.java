@@ -15,9 +15,6 @@ public class RegisterController {
     private ProfileRepository profileRepository;
 
     @Inject
-    ProfileCreatorService profileCreatorService;
-
-    @Inject
     private AllezonUtils utils;
 
     @Inject
@@ -31,8 +28,7 @@ public class RegisterController {
 
         if (profileRepository.findUserByUsername(registerRequest.getUsername()) == null)
             if(registerRequest.doPasswordsMatch()) {
-                profileCreatorService.saveProfile(registerRequest.toProfileEntity());
-                profileCreatorService.createCartForNewUser(registerRequest.getUsername());
+                profileRepository.save(registerRequest.toProfileEntity());
                 utils.redirectToPage("/login.xhtml");
             } else
                 passwordsDoNotMatch = true;

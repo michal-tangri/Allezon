@@ -15,6 +15,10 @@ public class CartManagerService {
     @Inject
     private AuctionRepository auctionRepository;
 
+    public void createCart(final String username) {
+        cartRepository.createCartForUser(username);
+    }
+
     public Cart getCartByUsername(final String username) {
         return cartRepository.findCartByUsername(username);
     }

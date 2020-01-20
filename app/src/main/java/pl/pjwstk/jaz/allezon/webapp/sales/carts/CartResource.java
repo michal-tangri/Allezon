@@ -7,6 +7,14 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import java.time.LocalDate;
 
+/*
+    Jak połączyć prezentację z widokiem
+
+    Czy koszyk może być tworzony przy rejestracji
+
+    Czy struktura się zgadza
+ */
+
 @Path("/carts")
 public class CartResource {
 
@@ -29,9 +37,11 @@ public class CartResource {
                                   @QueryParam("amount") String amountString) {
 
         Cart cart = cartManagerService.getCartByUsername(username);
+        if(cart == null)
+            cartManagerService.createCart(username);
         Long amount = amountString == null ? 1L : Long.parseLong(amountString);
 
-        CartProduct product = new CartProduct(LocalDate.now(), cartManagerService.getAuctionById(id), cart, amount);
+        CartProduct product = new CartProduct(cartManagerService.getAuctionById(id), cart, amount);
 
         if(product.getAuction() == null)
             return Response.status(Status.NOT_FOUND).entity("Auction with this ID does not exist").build();
@@ -41,7 +51,7 @@ public class CartResource {
 
     @DELETE
     @Path("/{username}")
-    public Response removeAllProductsInUsersCart(@PathParam("username") final String username) {
+    public Response removeAllProductsFromUsersCart(@PathParam("username") final String username) {
         if(cartManagerService.getCartByUsername(username) == null)
             return Response.status(Status.NOT_FOUND).entity("This user does not exist or does not have a cart!").build();
         cartManagerService.removeAllProductsInUsersCart(username);

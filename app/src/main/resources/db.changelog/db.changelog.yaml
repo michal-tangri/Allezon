@@ -56,9 +56,16 @@ databaseChangeLog:
         splitStatements: false
         path: 20200118_init.sql
   - changeSet:
-      id: admin_cart_init
+      id: 20200120_init
       author: Michał Tangri
       sqlFile:
         relativeToChangelogFile: true
         splitStatements: false
-        path: admin_cart_init.sql
+        path: 20200120_init.sql
+  - changeSet:
+      id: 20200121_init
+      author: Michał Tangri
+      sqlFile:
+        relativeToChangelogFile: true
+        splitStatements: false
+        path: 20200121_init.sql
