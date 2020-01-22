@@ -1,60 +1,55 @@
 package pl.pjwstk.jaz.allezon.webapp.sales.carts;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import java.time.LocalDate;
-
-/*
-    Jak połączyć prezentację z widokiem
-
-    Czy koszyk może być tworzony przy rejestracji
-
-    Czy struktura się zgadza
- */
 
 @Path("/carts")
 public class CartResource {
 
     @Inject
-    private CartManagerService cartManagerService;
+    private CartApi cartApi;
 
     @GET
     @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCart(@PathParam("username") final String username) {
-        var cart = cartManagerService.getCartByUsername(username);
-        if(cart == null)
-            return Response.status(Status.NOT_FOUND).build();
-        return Response.status(Response.Status.OK).entity(cart).build();
+        try {
+            var cart = cartApi.getCartWithProducts(username);
+            return Response.status(Status.OK).entity(cart).build();
+        }
+        catch (Exception err0) {
+            return Response.status(Status.NOT_FOUND).entity(err0.getMessage()).build();
+        }
     }
 
     @POST
-    @Path("/{username}/add/{id}")
-    public Response addItemToCart(@PathParam("username") final String username, @PathParam("id") final Long id,
-                                  @QueryParam("amount") String amountString) {
-
-        Cart cart = cartManagerService.getCartByUsername(username);
-        if(cart == null)
-            cartManagerService.createCart(username);
-        Long amount = amountString == null ? 1L : Long.parseLong(amountString);
-
-        CartProduct product = new CartProduct(cartManagerService.getAuctionById(id), cart, amount);
-
-        if(product.getAuction() == null)
-            return Response.status(Status.NOT_FOUND).entity("Auction with this ID does not exist").build();
-        cartManagerService.saveProduct(product);
-        return Response.ok("Added " + amount +" products No: " + id + " to " + username + "'s cart").build();
+    @Path("/add-item")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addItemToCart(@Valid AddItemCommand addItemCommand) {
+        try {
+            cartApi.addItemToCart(addItemCommand);
+            String message = "Added " + addItemCommand.getAmount() +" products No: " + addItemCommand.getAuctionId() +
+                             " to " + addItemCommand.getUsername() + "'s cart";
+            return Response.ok(message).build();
+        }
+        catch (IllegalArgumentException err0) {
+            return Response.status(Status.NOT_FOUND).entity(err0.getMessage()).build();
+        }
     }
 
     @DELETE
     @Path("/{username}")
     public Response removeAllProductsFromUsersCart(@PathParam("username") final String username) {
-        if(cartManagerService.getCartByUsername(username) == null)
-            return Response.status(Status.NOT_FOUND).entity("This user does not exist or does not have a cart!").build();
-        cartManagerService.removeAllProductsInUsersCart(username);
-        return Response.ok().entity("Deleted products from " + username + "'s cart").build();
+        try {
+            cartApi.deleteAllItemsInCart(username);
+            return Response.ok().entity("Deleted products from " + username + "'s cart").build();
+        }
+        catch (IllegalArgumentException err0) {
+            return Response.status(Status.NOT_FOUND).entity(err0.getMessage()).build();
+        }
     }
 }
