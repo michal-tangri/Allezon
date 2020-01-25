@@ -5,7 +5,6 @@ import pl.pjwstk.jaz.allezon.webapp.sales.photos.repositories.PhotoRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.List;
 
 @ApplicationScoped
 public class PhotoApiImpl implements PhotoApi {
