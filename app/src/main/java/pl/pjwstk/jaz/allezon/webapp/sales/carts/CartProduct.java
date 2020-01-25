@@ -22,7 +22,7 @@ public class CartProduct {
     @JoinColumn(name = "auction_id")
     private Auction auction;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "cart_id")
     @JsonBackReference
     private Cart cart;

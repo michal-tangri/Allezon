@@ -3,6 +3,7 @@ package pl.pjwstk.jaz.allezon.webapp.sales.carts;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @ApplicationScoped
 public class CartApiImpl implements CartApi {
@@ -13,8 +14,15 @@ public class CartApiImpl implements CartApi {
     @Override
     public Cart getCartWithProducts(final String username) throws IllegalArgumentException{
         var cart = cartManagerService.getCartByUsername(username);
+
         if(cart == null)
             throw new IllegalArgumentException("This user does not exist or does not have a cart!");
+
+        if(LocalDate.now().minusDays(30).isAfter(cart.getCreatedAt())) {
+            deleteCart(username);
+            throw new IllegalArgumentException("This cart has expired");
+        }
+
         return cart;
     }
 
@@ -26,7 +34,10 @@ public class CartApiImpl implements CartApi {
 
         Cart cart = cartManagerService.getCartByUsername(username);
         if(cart == null) {
-            cartManagerService.createCart(username);
+            if(cartManagerService.checkIfUserExists(username))
+                cartManagerService.createCart(username);
+            else
+                throw new IllegalArgumentException("User \"" + username + "\" does not exist");
             cart = cartManagerService.getCartByUsername(username);
         }
 
@@ -39,10 +50,10 @@ public class CartApiImpl implements CartApi {
     }
 
     @Override
-    public void deleteAllItemsInCart(final String username) throws IllegalArgumentException {
+    public void deleteCart(final String username) throws IllegalArgumentException {
         var cart = cartManagerService.getCartByUsername(username);
         if(cart == null)
             throw new IllegalArgumentException("This user does not exist or does not have a cart!");
-        cartManagerService.removeAllProductsInUsersCart(username);
+        cartManagerService.deleteCart(username);
     }
 }

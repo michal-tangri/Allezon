@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -10,157 +10,196 @@
 
 <h:head>
 
-    <title>Allezon</title>
-    <h:outputStylesheet name="main.css" library="css"/>
-    <h:outputStylesheet name="bootstrap.css" library="css"/>
-    <h:outputStylesheet name="fontello.css" library="css"/>
-    <h:outputStylesheet name="html-background.css" library="css"/>
+   <title>Allezon</title>
+   <h:outputStylesheet name="main.css" library="css"/>
+   <h:outputStylesheet name="bootstrap.css" library="css"/>
+   <h:outputStylesheet name="fontello.css" library="css"/>
+   <h:outputStylesheet name="html-background.css" library="css"/>
 
 </h:head>
 
 <h:body style="background-color: lightgray;">
 
-    <ui:include src="/templates/topbar.xhtml"/>
+   <ui:include src="/templates/topbar.xhtml"/>
 
-    <div>
+   <div>
 
-        <div id="viewport">
+      <div id="viewport">
 
-            <ui:include src="/templates/sidebar.xhtml"/>
+         <ui:include src="/templates/sidebar.xhtml"/>
 
-            <div id="content" style="margin-top: 81px; z-index: 1">
-                <div class="container-fluid" style="margin-top: 10px;">
+         <div id="content" style="margin-top: 81px; z-index: 1">
+            <div class="container-fluid" style="margin-top: 10px;">
 
-                    <div class="row">
-                        <div class="col-lg">
-                            <div>
-                                <div style="color: black; text-align: center">
-                                    <h4>Auctions</h4>
-                                </div>
-                            </div>
+               <div class="row">
+                  <div class="col-lg">
+                     <div>
+                        <div style="color: black; text-align: center">
+                           <h4>Auctions</h4>
                         </div>
-                    </div>
+                     </div>
+                  </div>
+               </div>
 
-                    <div class="row">
-                        <div class="col-lg">
-                            <div>
-                                <div align="center" style="margin-top: 10px">
+               <div class="row">
+                  <div class="col-lg">
+                     <div>
+                        <div align="center" style="margin-top: 10px">
 
-                                    <h:form>
+                           <h:form>
 
-                                        <h:selectOneMenu
-                                                value="#{auctionListController.auctionListRequest.categoryId}"
-                                                styleClass="browser-default custom-select"
-                                                style="width: 270px; height: 46px">
+                              <h:selectOneMenu
+                                    value="#{auctionListController.auctionListRequest.categoryId}"
+                                    styleClass="browser-default custom-select"
+                                    style="width: 270px; height: 46px">
 
-                                            <c:forEach items="#{auctionListController.getAllCategories()}"
-                                                       var="category" varStatus="metadata">
-                                                <f:selectItem itemValue="#{category.id}"
-                                                              itemLabel="#{category.section.name} - #{category.name}"/>
-                                            </c:forEach>
+                                 <c:forEach items="#{auctionListController.getAllCategories()}"
+                                            var="category" varStatus="metadata">
+                                    <f:selectItem itemValue="#{category.id}"
+                                                  itemLabel="#{category.section.name} - #{category.name}"/>
+                                 </c:forEach>
 
-                                        </h:selectOneMenu>
+                              </h:selectOneMenu>
 
-                                        <h:commandButton value="Filter results"
-                                                         action="#{auctionListController.filter()}"
-                                                         styleClass="btn btn-primary"
-                                                         style="width: 270px; height: 44px"/>
+                              <h:commandButton value="Filter results"
+                                               action="#{auctionListController.filter()}"
+                                               styleClass="btn btn-primary"
+                                               style="width: 270px; height: 44px"/>
 
-                                    </h:form>
+                           </h:form>
 
-                                </div>
-                            </div>
                         </div>
-                    </div>
+                     </div>
+                  </div>
+               </div>
 
-                    <div class="row">
-                        <div class="col-lg">
-                            <div>
-                                <div align="center">
+               <div class="row">
+                  <div class="col-lg">
+                     <div>
+                        <div align="center">
 
-                                    <div class="list-group" style="margin-top: 15px; margin-left: 20%; text-align: left">
-                                        <c:forEach
-                                                items="#{auctionListController.getAllAuctionsByCategoryId(auctionListController.auctionListRequest.categoryId)}"
-                                                var="auction">
+                           <div class="list-group" style="margin-top: 15px; margin-left: 20%; text-align: left">
+                              <c:forEach
+                                    items="#{auctionListController.getAllAuctionsByCategoryId(auctionListController.auctionListRequest.categoryId)}"
+                                    var="auction">
 
-                                            <h:link outcome="auction.xhtml"
-                                                    styleClass="list-group-item list-group-item-action"
-                                                    style="width: 75%; height: 170px">
-                                                <f:param name="auctionId" value="#{auction.id}"/>
 
-                                                <div style="display: inline; float: left;">
-                                                    <h:graphicImage
-                                                            value="/image?img=#{auctionListController.getMiniatureByAuctionId(auction.id).getFilePath()}"
-                                                            alt="No miniature"
-                                                            style="width: 200px; height: 140px; border: 1px solid black"/>
-                                                </div>
+                                 <h:link outcome="auction.xhtml"
+                                         styleClass="list-group-item list-group-item-action"
+                                         style="width: 75%; height: 170px">
+                                    <f:param name="auctionId" value="#{auction.id}"/>
 
-                                                <div style="margin-left: 210px">
-                                                    <div style="display: inline">
-                                                        <table style="max-width: 400px; display: inline">
-                                                            <tr>
-                                                                <td>Title</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="line-break: anywhere; max-width: 400px"><b><h:outputText value="#{auction.title}"/></b></td>
-                                                            </tr>
-                                                        </table>
-
-                                                        <table style="float: right;">
-                                                            <tr>
-                                                                <td></td>
-                                                                <td valign="top" align="right"><b>Price: <h:outputText value="$#{auction.price}"/></b></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td></td>
-                                                                <td valign="top" align="right">Category</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td></td>
-                                                                <td align="right"><i><h:outputText value="#{auction.category.section.name}/#{auction.category.name}"/></i></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td></td>
-                                                                <td valign="top" align="right">
-                                                                    <h:link value="Add to cart"
-                                                                            outcome="auctions"
-                                                                            styleClass="btn btn-primary"
-                                                                            style="width: 170px; height: 40px">
-                                                                        <f:param name="auctionId" value="#{auction.id}"/>
-
-                                                                    </h:link>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </h:link>
-                                        </c:forEach>
+                                    <div style="display: inline; float: left;">
+                                       <h:graphicImage
+                                             value="/image?img=#{auctionListController.getMiniatureByAuctionId(auction.id).getFilePath()}"
+                                             alt="No miniature"
+                                             style="width: 200px; height: 140px; border: 1px solid black"/>
                                     </div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                    <div style="margin-left: 210px">
+                                       <div style="display: inline">
+                                          <table style="max-width: 400px; display: inline">
+                                             <tr>
+                                                <td>Title</td>
+                                             </tr>
+                                             <tr>
+                                                <td style="line-break: anywhere; max-width: 400px"><b><h:outputText
+                                                      value="#{auction.title}"/></b></td>
+                                             </tr>
+                                          </table>
 
-                    <div class="row">
-                        <div class="col-lg">
-                            <div>
-                                <div>
-                                    <ui:insert name="footer">
-                                        <ui:include src="/templates/footer.xhtml"/>
-                                    </ui:insert>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                          <table style="float: right;">
+                                             <tr>
+                                                <td></td>
+                                                <td valign="top" align="right"><b>Price: <h:outputText
+                                                      value="$#{auction.price}"/></b></td>
+                                             </tr>
+                                             <tr>
+                                                <td></td>
+                                                <td valign="top" align="right">Category</td>
+                                             </tr>
+                                             <tr>
+                                                <td></td>
+                                                <td align="right"><i><h:outputText
+                                                      value="#{auction.category.section.name}/#{auction.category.name}"/></i>
+                                                </td>
+                                             </tr>
+                                             <tr>
+                                                <td></td>
+                                                <td valign="top" align="right">
 
-                </div>
+
+                                                </td>
+                                             </tr>
+                                          </table>
+                                       </div>
+                                    </div>
+
+                                 </h:link>
+
+                                 <button class="btn btn-primary"
+                                         style="width: 75%; height: 40px; margin-bottom: 15px"
+                                         onclick="addItem(#{auction.id})">
+                                    Add to cart
+                                 </button>
+
+                              </c:forEach>
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-lg">
+                     <div>
+                        <div>
+                           <ui:insert name="footer">
+                              <ui:include src="/templates/footer.xhtml"/>
+                           </ui:insert>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
             </div>
-        </div>
+         </div>
+      </div>
 
-    </div>
+   </div>
+
+   <script type="text/javascript">
+
+       function showAddedPopup() {
+           document.getElementById('added-bg').style.visibility = 'visible';
+           document.getElementById('added-content').style.visibility = 'visible';
+       }
+
+       function addItem(auctionId) {
+
+           const jsonData = {
+               username: '${currentSession.username}',
+               auctionId: auctionId,
+               amount: 1
+           };
+
+           $.ajax
+           ({
+               method: "post",
+               url: '/app/api/carts/add-item',
+               contentType: "application/json",
+               data: JSON.stringify(jsonData),
+               dataType: 'json'
+           });
+
+           showAddedPopup();
+       }
+   </script>
+
+   <script src="https://code.jquery.com/jquery-3.4.1.js"
+           integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+           crossorigin="anonymous" type="text/javascript"></script>
 
 </h:body>
 

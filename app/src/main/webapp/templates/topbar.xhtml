@@ -1,102 +1,186 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
 >
 
 <body>
 
 <ui:composition>
 
-    <h:outputStylesheet name="popup.css" library="css"/>
+   <h:outputStylesheet name="popup.css" library="css"/>
 
-    <!-- Topbar -->
-    <div class="container-fluid" style="width: 100%; padding-left: 0; padding-right: 0;">
-        <div class="row">
-            <div class="col-lg">
-                <div id="topBar" style="position: fixed; width: 100%; z-index: 2">
-                    <header>
-                        <h:link outcome="index.html">
-                            <h:graphicImage url="#{resource['img/allezon-logo-white.png']}"
-                                            style="width: 250px; height: 68px"/>
-                        </h:link>
+   <!-- Topbar -->
+   <div class="container-fluid" style="width: 100%; padding-left: 0; padding-right: 0;">
+      <div class="row">
+         <div class="col-lg">
+            <div id="topBar" style="position: fixed; width: 100%; z-index: 2">
+               <header>
+                  <h:link outcome="index.html">
+                     <h:graphicImage url="#{resource['img/allezon-logo-white.png']}"
+                                     style="width: 250px; height: 68px"/>
+                  </h:link>
 
-                        <div align="right" style="margin-top: -50px">
+                  <div align="right" style="margin-top: -50px">
 
-                            <h:form>
+                     <h:form>
 
-                                <h:commandButton value="Cart"
-                                                 styleClass="btn btn-primary" action="null"
-                                                 onclick="showCart()"
-                                                 rendered="#{currentSession.logged}"
-                                                 style="width: 120px; height: 36px;
+                        <h:commandButton value="Cart"
+                                         styleClass="btn btn-primary" action="null"
+                                         onclick="showCart()"
+                                         rendered="#{currentSession.logged}"
+                                         style="width: 120px; height: 36px;
                                              margin-left: 10px; margin-bottom: 10px;
                                              margin-right: 20px; margin-top: -14px;
                                              text-align: center;">
-                                    <f:ajax render="@none" event="click" />
-                                </h:commandButton>
+                           <f:ajax render="@none" event="click"/>
+                        </h:commandButton>
 
-                                <h:commandButton value="Logout"
-                                                 action="#{currentSession.closeSession}"
-                                                 styleClass="btn btn-primary"
-                                                 id="logout"
-                                                 rendered="#{currentSession.logged}"
-                                                 style="width: 120px; height: 36px;
+                        <h:commandButton value="Logout"
+                                         action="#{currentSession.closeSession}"
+                                         styleClass="btn btn-primary"
+                                         id="logout"
+                                         rendered="#{currentSession.logged}"
+                                         style="width: 120px; height: 36px;
                                                         margin-left: 10px; margin-bottom: 10px;
                                                         margin-right: 20px; margin-top: -14px;
                                                         text-align: center;"/>
-                            </h:form>
+                     </h:form>
 
-                            <h:link value="Sign in"
-                                    outcome="login.xhtml"
-                                    styleClass="btn btn-primary"
-                                    rendered="#{currentSession.logged == false}"
-                                    style="width: 120px; height: 36px;
+                     <h:link value="Sign in"
+                             outcome="login.xhtml"
+                             styleClass="btn btn-primary"
+                             rendered="#{currentSession.logged == false}"
+                             style="width: 120px; height: 36px;
                                            margin-left: 10px; margin-bottom: 10px;
                                            margin-right: 20px; margin-top: -14px;
                                            text-align: center;"/>
 
-                            <h:link value="Sign up"
-                                    outcome="register"
-                                    styleClass="btn btn-primary"
-                                    rendered="#{currentSession.logged == false}"
-                                    style="width: 120px; height: 36px;
+                     <h:link value="Sign up"
+                             outcome="register"
+                             styleClass="btn btn-primary"
+                             rendered="#{currentSession.logged == false}"
+                             style="width: 120px; height: 36px;
                                            margin-left: 10px; margin-bottom: 10px;
                                            margin-right: 20px; margin-top: -14px;
                                            text-align: center;"/>
-                        </div>
+                  </div>
 
-                    </header>
-                </div>
+               </header>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 
-    <div id="cart-bg" class="popup-bg">
-        <div id="cart-content" class="popup-content">
-            <div class="close-button" onclick="hideCart()">+</div>
+   <div id="cart-bg" class="popup-bg">
+      <div id="cart-content" class="popup-content">
+         <div class="close-button" onclick="hideCart()">+</div>
 
+         <div>
+            <table id="products" style="width: 100%;" border="1">
+            <!-- Miejsce na dane z jQUery -->
+            </table>
 
+            <button class="btn btn-primary"
+                    style="width: 40%; height: 40px;"
+                    onclick="clearCart()">
+               Clear cart
+            </button>
 
-        </div>
-    </div>
+            <button class="btn btn-primary"
+                    style="width: 40%; height: 40px;"
+                    onclick="clearCart()">
+               Buy
+            </button>
 
-    <script type="text/javascript">
-        function showCart() {
-            document.getElementById('cart-bg').style.visibility = 'visible';
-            document.getElementById('cart-content').style.visibility = 'visible';
-        }
+         </div>
 
-        function hideCart() {
-            document.getElementById('cart-bg').style.visibility = 'hidden';
-            document.getElementById('cart-content').style.visibility = 'hidden';
-        }
-    </script>
+      </div>
+   </div>
+
+   <div id="added-bg" class="popup-bg">
+      <div id="added-content" class="popup-added-content">
+         <div class="close-button" onclick="hideAddedPopup()">+</div>
+
+         <div>
+            This item has been added to your cart!
+         </div>
+
+      </div>
+   </div>
+
+   <script type="text/javascript">
+
+       function appendHTMLToCart(product, photo) {
+           console.log(photo);
+           var img = '<img src="/app/image?img=';
+           var imgClose = '" width="160" height="90" alt="No miniature" />';
+           $("table#products").append(
+               "<tr>" +
+               "<td>" + img + photo.filePath + imgClose + "</td>" +
+               "<td>" + product.auction.title + "</td>" +
+               "<td>" + product.amount + "</td>" +
+               "<td>$" + product.auction.price + "(" + product.auction.price * product.amount + ")</td>" +
+               "</tr>"
+           );
+       }
+
+       function showCart() {
+           document.getElementById('cart-bg').style.visibility = 'visible';
+           document.getElementById('cart-content').style.visibility = 'visible';
+
+           $("table#products").html("").append(
+               "<tr>\n" +
+               "<td><b>Miniature</b></td>\n" +
+               "<td><b>Title</b></td>\n" +
+               "<td><b>Amount</b></td>\n" +
+               "<td><b>Price</b></td>\n" +
+               "</tr>"
+           );
+
+           $.get('/app/api/carts/${currentSession.username}', {}, function (data) {
+
+               let photo;
+               $.each(data.products, function (index) {
+                   let product = this;
+                   $.get('/app/api/photos/' + product.auction.id, {}, function (data) {
+                       appendHTMLToCart(product, data);
+                   }, 'json').fail(function () {
+                       appendHTMLToCart(product, NaN);
+                   });
+               })
+           }, 'json');
+
+       }
+
+       function hideCart() {
+           document.getElementById('cart-bg').style.visibility = 'hidden';
+           document.getElementById('cart-content').style.visibility = 'hidden';
+       }
+
+       function hideAddedPopup() {
+           document.getElementById('added-bg').style.visibility = 'hidden';
+           document.getElementById('added-content').style.visibility = 'hidden';
+       }
+
+       function clearCart() {
+           $.ajax
+           ({
+               url: '/app/api/carts/${currentSession.username}',
+               type: "DELETE",
+           });
+           hideCart()
+       }
+   </script>
+
+   <script src="https://code.jquery.com/jquery-3.4.1.js"
+           integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+           crossorigin="anonymous" type="text/javascript"></script>
 
 </ui:composition>
-
 
 
 </body>

@@ -69,3 +69,10 @@ databaseChangeLog:
         relativeToChangelogFile: true
         splitStatements: false
         path: 20200121_init.sql
+  - changeSet:
+      id: 20200125_init
+      author: Michał Tangri
+      sqlFile:
+        relativeToChangelogFile: true
+        splitStatements: false
+        path: 20200125_init.sql

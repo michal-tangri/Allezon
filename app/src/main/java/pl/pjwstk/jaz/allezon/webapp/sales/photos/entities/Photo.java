@@ -1,6 +1,6 @@
 package pl.pjwstk.jaz.allezon.webapp.sales.photos.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import pl.pjwstk.jaz.allezon.webapp.sales.auctions.entities.Auction;
 
 import javax.persistence.*;
@@ -18,7 +18,7 @@ public class Photo {
 
     @ManyToOne
     @JoinColumn(name = "auction_id")
-    @JsonBackReference
+    @JsonIgnore
     private Auction auction;
 
     public Photo() {

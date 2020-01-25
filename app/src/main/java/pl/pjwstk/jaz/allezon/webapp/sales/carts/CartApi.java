@@ -8,6 +8,5 @@ public interface CartApi {
 
     void addItemToCart(@Valid AddItemCommand addItemCommand);
 
-    void deleteAllItemsInCart(String username);
-
+    void deleteCart(String username);
 }

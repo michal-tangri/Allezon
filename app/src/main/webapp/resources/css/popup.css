@@ -23,6 +23,18 @@
     z-index: 4;
 }
 
+.popup-added-content {
+    height: 60px;
+    width: 400px;
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    border-radius: 4px;
+    visibility: hidden;
+    z-index: 4;
+}
+
 .close-button {
     position: absolute;
     top: 0;

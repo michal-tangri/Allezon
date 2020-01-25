@@ -1,5 +1,6 @@
 package pl.pjwstk.jaz.allezon.webapp.sales.carts;
 
+import pl.pjwstk.jaz.allezon.webapp.authorization.repositories.ProfileRepository;
 import pl.pjwstk.jaz.allezon.webapp.sales.auctions.entities.Auction;
 import pl.pjwstk.jaz.allezon.webapp.sales.auctions.repositories.AuctionRepository;
 
@@ -14,6 +15,9 @@ public class CartManagerService {
 
     @Inject
     private AuctionRepository auctionRepository;
+
+    @Inject
+    private ProfileRepository profileRepository;
 
     public void createCart(final String username) {
         cartRepository.createCartForUser(username);
@@ -31,7 +35,11 @@ public class CartManagerService {
         cartRepository.save(product);
     }
 
-    public void removeAllProductsInUsersCart(String username) {
-        cartRepository.removeProductsInUsersCart(username);
+    public void deleteCart(String username) {
+        cartRepository.deleteCart(username);
+    }
+
+    public boolean checkIfUserExists(final String username) {
+        return profileRepository.findUserByUsername(username) != null;
     }
 }

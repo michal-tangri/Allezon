@@ -36,9 +36,9 @@ public class CartRepository {
     }
 
     @Transactional
-    public void removeProductsInUsersCart(String username) {
-        Long cartId = findCartByUsername(username).getId();
-        entityManager.createNativeQuery("DELETE FROM cart_products WHERE cart_id = " + cartId).executeUpdate();
+    public void deleteCart(String username) {
+        entityManager.createNativeQuery("DELETE FROM carts WHERE username = :username")
+                .setParameter("username", username).executeUpdate();
 
     }
 

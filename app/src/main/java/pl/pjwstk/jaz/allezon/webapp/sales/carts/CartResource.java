@@ -45,7 +45,7 @@ public class CartResource {
     @Path("/{username}")
     public Response removeAllProductsFromUsersCart(@PathParam("username") final String username) {
         try {
-            cartApi.deleteAllItemsInCart(username);
+            cartApi.deleteCart(username);
             return Response.ok().entity("Deleted products from " + username + "'s cart").build();
         }
         catch (IllegalArgumentException err0) {
